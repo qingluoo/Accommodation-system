@@ -28,4 +28,25 @@
         from post
         where updateTime >= #{minUpdateTime}
     </select>
+
+    <delete id="batchDeletePosts" parameterType="java.util.List">
+        delete from post
+        where id in
+        <foreach item="id" index="index" collection="ids"
+                 open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <insert id="batchInsertPosts" parameterType="java.util.List">
+        insert into post (id, title, content, tags, thumbNum, favourNum, userId, createTime, updateTime, isDelete)
+        values
+        <foreach item="post" index="index" collection="posts"
+                 separator=",">
+            (#{post.id}, #{post.title}, #{post.content}, #{post.tags}, #{post.thumbNum}, #{post.favourNum}, #{post.userId}, #{post.createTime}, #{post.updateTime}, #{post.isDelete})
+        </foreach>
+    </insert>
+
+
+
 </mapper>

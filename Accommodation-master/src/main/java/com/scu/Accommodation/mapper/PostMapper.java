@@ -16,6 +16,10 @@ public interface PostMapper extends BaseMapper<Post> {
      */
     List<Post> listPostWithDelete(Date minUpdateTime);
 
+    Integer batchDeletePosts(List<Long> ids);
+
+    Integer batchInsertPosts(List<Post> posts);
+
 }
 
 
