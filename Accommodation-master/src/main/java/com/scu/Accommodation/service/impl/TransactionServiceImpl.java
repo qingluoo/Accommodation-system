@@ -73,32 +73,28 @@ public class TransactionServiceImpl extends ServiceImpl<TransactionMapper, Trans
         }
         // todo 从对象中取值
         Long id = transactionQueryRequest.getId();
-        Long notId = transactionQueryRequest.getNotId();
-        String title = transactionQueryRequest.getTitle();
-        String content = transactionQueryRequest.getContent();
-        String searchText = transactionQueryRequest.getSearchText();
+        String unionId = transactionQueryRequest.getUnionId();
+        String name = transactionQueryRequest.getName();
+        Integer roleId = transactionQueryRequest.getRoleId();
+        String description = transactionQueryRequest.getDescription();
+        Integer type = transactionQueryRequest.getType();
+        Integer status = transactionQueryRequest.getStatus();
+        // todo 补充需要的查询条件
+        // 排序规则
         String sortField = transactionQueryRequest.getSortField();
         String sortOrder = transactionQueryRequest.getSortOrder();
-        List<String> tagList = transactionQueryRequest.getTags();
+
         Long userId = transactionQueryRequest.getUserId();
         // todo 补充需要的查询条件
-        // 从多字段中搜索
-        if (StringUtils.isNotBlank(searchText)) {
-            // 需要拼接查询条件
-            queryWrapper.and(qw -> qw.like("title", searchText).or().like("content", searchText));
-        }
         // 模糊查询
-        queryWrapper.like(StringUtils.isNotBlank(title), "title", title);
-        queryWrapper.like(StringUtils.isNotBlank(content), "content", content);
-        // JSON 数组查询
-        if (CollUtil.isNotEmpty(tagList)) {
-            for (String tag : tagList) {
-                queryWrapper.like("tags", "\"" + tag + "\"");
-            }
-        }
+        queryWrapper.like(StringUtils.isNotBlank(name), "name", name);
+        queryWrapper.like(StringUtils.isNotBlank(description), "description", description);
         // 精确查询
-        queryWrapper.ne(ObjectUtils.isNotEmpty(notId), "id", notId);
         queryWrapper.eq(ObjectUtils.isNotEmpty(id), "id", id);
+        queryWrapper.eq(StringUtils.isNotBlank(unionId), "unionId", unionId);
+        queryWrapper.eq(ObjectUtils.isNotEmpty(roleId), "roleId", roleId);
+        queryWrapper.eq(ObjectUtils.isNotEmpty(type), "type", type);
+        queryWrapper.eq(ObjectUtils.isNotEmpty(status), "status", status);
         queryWrapper.eq(ObjectUtils.isNotEmpty(userId), "userId", userId);
         // 排序规则
         queryWrapper.orderBy(SqlUtils.validSortField(sortField),

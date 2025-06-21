@@ -71,31 +71,18 @@ public class RepairerServiceImpl extends ServiceImpl<RepairerMapper, Repairer> i
         }
         // todo 从对象中取值
         Long id = repairerQueryRequest.getId();
-        Long notId = repairerQueryRequest.getNotId();
-        String title = repairerQueryRequest.getTitle();
-        String content = repairerQueryRequest.getContent();
-        String searchText = repairerQueryRequest.getSearchText();
+        String unionId = repairerQueryRequest.getUnionId();
+        String name = repairerQueryRequest.getName();
+        String phone = repairerQueryRequest.getPhone();
+        Long userId = repairerQueryRequest.getUserId();
         String sortField = repairerQueryRequest.getSortField();
         String sortOrder = repairerQueryRequest.getSortOrder();
-        List<String> tagList = repairerQueryRequest.getTags();
-        Long userId = repairerQueryRequest.getUserId();
         // todo 补充需要的查询条件
-        // 从多字段中搜索
-        if (StringUtils.isNotBlank(searchText)) {
-            // 需要拼接查询条件
-            queryWrapper.and(qw -> qw.like("title", searchText).or().like("content", searchText));
-        }
         // 模糊查询
-        queryWrapper.like(StringUtils.isNotBlank(title), "title", title);
-        queryWrapper.like(StringUtils.isNotBlank(content), "content", content);
-        // JSON 数组查询
-        if (CollUtil.isNotEmpty(tagList)) {
-            for (String tag : tagList) {
-                queryWrapper.like("tags", "\"" + tag + "\"");
-            }
-        }
+        queryWrapper.like(ObjectUtils.isNotEmpty(unionId), "unionId", unionId);
+        queryWrapper.like(ObjectUtils.isNotEmpty(name), "name", name);
+        queryWrapper.like(ObjectUtils.isNotEmpty(phone), "phone", phone);
         // 精确查询
-        queryWrapper.ne(ObjectUtils.isNotEmpty(notId), "id", notId);
         queryWrapper.eq(ObjectUtils.isNotEmpty(id), "id", id);
         queryWrapper.eq(ObjectUtils.isNotEmpty(userId), "userId", userId);
         // 排序规则

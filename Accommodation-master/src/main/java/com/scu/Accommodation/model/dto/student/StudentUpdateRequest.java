@@ -12,25 +12,48 @@ import java.util.List;
 @Data
 public class StudentUpdateRequest implements Serializable {
 
+    private long id;
     /**
-     * id
+     *
      */
-    private Long id;
+    private String unionId;
 
     /**
-     * 标题
+     *
      */
-    private String title;
+    private Integer grade;
 
     /**
-     * 内容
+     *
      */
-    private String content;
+    private String stuName;
 
     /**
-     * 标签列表
+     *
      */
-    private List<String> tags;
+    private Integer sex;
+
+    /**
+     *
+     */
+    private String college;
+
+    /**
+     *
+     */
+    private String major;
+
+    /**
+     *
+     */
+    private String classNum;
+
+    /**
+     *
+     */
+    private String roomId;
+
+    private long userId;
 
     private static final long serialVersionUID = 1L;
 }

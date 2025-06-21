@@ -12,25 +12,26 @@ import java.util.List;
 @Data
 public class RepairerUpdateRequest implements Serializable {
 
+    private long id;
     /**
-     * id
+     *
      */
-    private Long id;
+    private String unionId;
 
     /**
-     * 标题
+     *
      */
-    private String title;
+    private String name;
 
     /**
-     * 内容
+     *
      */
-    private String content;
+    private String phone;
 
     /**
      * 标签列表
      */
-    private List<String> tags;
+    private long userId;
 
     private static final long serialVersionUID = 1L;
 }

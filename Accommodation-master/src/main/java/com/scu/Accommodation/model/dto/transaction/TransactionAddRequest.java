@@ -12,20 +12,35 @@ import java.util.List;
 @Data
 public class TransactionAddRequest implements Serializable {
 
+    private long id;
     /**
-     * 标题
+     *
      */
-    private String title;
+    private String unionId;
 
     /**
-     * 内容
+     *
      */
-    private String content;
+    private String name;
 
     /**
-     * 标签列表
+     *
      */
-    private List<String> tags;
+    private Integer roleId;
+
+    /**
+     *
+     */
+    private String description;
+
+    /**
+     *
+     */
+    private Integer type;
+
+
+    private long userId;
+
 
     private static final long serialVersionUID = 1L;
 }

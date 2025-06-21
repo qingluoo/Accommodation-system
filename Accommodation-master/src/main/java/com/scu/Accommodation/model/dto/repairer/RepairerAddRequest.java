@@ -1,5 +1,6 @@
 package com.scu.Accommodation.model.dto.repairer;
 
+import com.scu.Accommodation.model.entity.User;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -12,20 +13,23 @@ import java.util.List;
 @Data
 public class RepairerAddRequest implements Serializable {
 
+    private long id;
     /**
-     * 标题
+     *
      */
-    private String title;
+    private String unionId;
 
     /**
-     * 内容
+     *
      */
-    private String content;
+    private String name;
 
     /**
-     * 标签列表
+     *
      */
-    private List<String> tags;
+    private String phone;
+
+    private long userId;
 
     private static final long serialVersionUID = 1L;
 }

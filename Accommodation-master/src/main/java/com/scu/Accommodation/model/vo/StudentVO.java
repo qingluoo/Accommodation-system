@@ -16,40 +16,46 @@ import java.util.List;
 @Data
 public class StudentVO implements Serializable {
 
-    /**
-     * id
-     */
     private Long id;
+    /**
+     *
+     */
+    private String unionId;
 
     /**
-     * 标题
+     *
      */
-    private String title;
+    private Integer grade;
 
     /**
-     * 内容
+     *
      */
-    private String content;
+    private String stuName;
 
     /**
-     * 创建用户 id
+     *
      */
-    private Long userId;
+    private Integer sex;
 
     /**
-     * 创建时间
+     *
      */
-    private Date createTime;
+    private String college;
 
     /**
-     * 更新时间
+     *
      */
-    private Date updateTime;
+    private String major;
 
     /**
-     * 创建用户信息
+     *
      */
-    private UserVO user;
+    private String classNum;
+
+    /**
+     *
+     */
+    private String roomId;
 
     /**
      * 封装类转对象

@@ -22,34 +22,40 @@ public class TeacherVO implements Serializable {
     private Long id;
 
     /**
-     * 标题
+     *
+     */
+    private String unionId;
+
+    /**
+     *
+     */
+    private String teaName;
+
+    /**
+     *
+     */
+    private Integer sex;
+
+    /**
+     *
+     */
+    private String college;
+
+    /**
+     *
      */
     private String title;
 
     /**
-     * 内容
+     *
      */
-    private String content;
+    private String roomId;
 
     /**
-     * 创建用户 id
+     *
      */
-    private Long userId;
+    private String phone;
 
-    /**
-     * 创建时间
-     */
-    private Date createTime;
-
-    /**
-     * 更新时间
-     */
-    private Date updateTime;
-
-    /**
-     * 创建用户信息
-     */
-    private UserVO user;
 
     /**
      * 封装类转对象

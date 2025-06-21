@@ -15,40 +15,23 @@ import java.util.List;
 @Data
 public class RepairerQueryRequest extends PageRequest implements Serializable {
 
+    private long id;
     /**
-     * id
+     *
      */
-    private Long id;
+    private String unionId;
 
     /**
-     * id
+     *
      */
-    private Long notId;
+    private String name;
 
     /**
-     * 搜索词
+     *
      */
-    private String searchText;
+    private String phone;
 
-    /**
-     * 标题
-     */
-    private String title;
-
-    /**
-     * 内容
-     */
-    private String content;
-
-    /**
-     * 标签列表
-     */
-    private List<String> tags;
-
-    /**
-     * 创建用户 id
-     */
-    private Long userId;
+    private long userId;
 
     private static final long serialVersionUID = 1L;
 }

@@ -15,40 +15,44 @@ import java.util.List;
 @Data
 public class TeacherQueryRequest extends PageRequest implements Serializable {
 
+    private long id;
     /**
-     * id
+     *
      */
-    private Long id;
+    private String unionId;
 
     /**
-     * id
+     *
      */
-    private Long notId;
+    private String teaName;
 
     /**
-     * 搜索词
+     *
      */
-    private String searchText;
+    private Integer sex;
 
     /**
-     * 标题
+     *
+     */
+    private String college;
+
+    /**
+     *
      */
     private String title;
 
     /**
-     * 内容
+     *
      */
-    private String content;
+    private String roomId;
 
     /**
-     * 标签列表
+     *
      */
-    private List<String> tags;
+    private String phone;
 
-    /**
-     * 创建用户 id
-     */
-    private Long userId;
+    private long userId;
+
 
     private static final long serialVersionUID = 1L;
 }

@@ -79,32 +79,28 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         }
         // todo 从对象中取值
         Long id = studentQueryRequest.getId();
-        Long notId = studentQueryRequest.getNotId();
-        String title = studentQueryRequest.getTitle();
-        String content = studentQueryRequest.getContent();
-        String searchText = studentQueryRequest.getSearchText();
+        String unionId = studentQueryRequest.getUnionId();
+        Integer grade = studentQueryRequest.getGrade();
+        String stuName = studentQueryRequest.getStuName();
+        Integer sex = studentQueryRequest.getSex();
+        String college = studentQueryRequest.getCollege();
+        String major = studentQueryRequest.getMajor();
+        String classNum = studentQueryRequest.getClassNum();
+        String roomId = studentQueryRequest.getRoomId();
+        Long userId = studentQueryRequest.getUserId();
         String sortField = studentQueryRequest.getSortField();
         String sortOrder = studentQueryRequest.getSortOrder();
-        List<String> tagList = studentQueryRequest.getTags();
-        Long userId = studentQueryRequest.getUserId();
-        // todo 补充需要的查询条件
-        // 从多字段中搜索
-        if (StringUtils.isNotBlank(searchText)) {
-            // 需要拼接查询条件
-            queryWrapper.and(qw -> qw.like("title", searchText).or().like("content", searchText));
-        }
         // 模糊查询
-        queryWrapper.like(StringUtils.isNotBlank(title), "title", title);
-        queryWrapper.like(StringUtils.isNotBlank(content), "content", content);
-        // JSON 数组查询
-        if (CollUtil.isNotEmpty(tagList)) {
-            for (String tag : tagList) {
-                queryWrapper.like("tags", "\"" + tag + "\"");
-            }
-        }
+        queryWrapper.like(ObjectUtils.isNotEmpty(stuName), "stuName", stuName);
+        queryWrapper.like(ObjectUtils.isNotEmpty(roomId), "roomId", roomId);
         // 精确查询
-        queryWrapper.ne(ObjectUtils.isNotEmpty(notId), "id", notId);
         queryWrapper.eq(ObjectUtils.isNotEmpty(id), "id", id);
+        queryWrapper.eq(ObjectUtils.isNotEmpty(unionId), "unionId", unionId);
+        queryWrapper.eq(ObjectUtils.isNotEmpty(college), "college", college);
+        queryWrapper.eq(ObjectUtils.isNotEmpty(major), "major", major);
+        queryWrapper.eq(ObjectUtils.isNotEmpty(grade), "grade", grade);
+        queryWrapper.eq(ObjectUtils.isNotEmpty(classNum), "classNum", classNum);
+        queryWrapper.eq(ObjectUtils.isNotEmpty(sex), "sex", sex);
         queryWrapper.eq(ObjectUtils.isNotEmpty(userId), "userId", userId);
         // 排序规则
         queryWrapper.orderBy(SqlUtils.validSortField(sortField),

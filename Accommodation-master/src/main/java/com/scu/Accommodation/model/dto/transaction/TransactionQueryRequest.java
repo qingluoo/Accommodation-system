@@ -15,40 +15,38 @@ import java.util.List;
 @Data
 public class TransactionQueryRequest extends PageRequest implements Serializable {
 
+    private long id;
     /**
-     * id
+     *
      */
-    private Long id;
+    private String unionId;
 
     /**
-     * id
+     *
      */
-    private Long notId;
+    private String name;
 
     /**
-     * 搜索词
+     *
      */
-    private String searchText;
+    private Integer roleId;
 
     /**
-     * 标题
+     *
      */
-    private String title;
+    private String description;
 
     /**
-     * 内容
+     *
      */
-    private String content;
+    private Integer type;
 
     /**
-     * 标签列表
+     *
      */
-    private List<String> tags;
+    private Integer status;
 
-    /**
-     * 创建用户 id
-     */
-    private Long userId;
+    private long userId;
 
     private static final long serialVersionUID = 1L;
 }

@@ -16,25 +16,37 @@ import java.util.List;
 @Data
 public class TransactionVO implements Serializable {
 
-    /**
-     * id
-     */
     private Long id;
 
     /**
-     * 标题
+     *
      */
-    private String title;
+    private String unionId;
 
     /**
-     * 内容
+     *
      */
-    private String content;
+    private String name;
 
     /**
-     * 创建用户 id
+     *
      */
-    private Long userId;
+    private Integer roleId;
+
+    /**
+     *
+     */
+    private String description;
+
+    /**
+     *
+     */
+    private Integer type;
+
+    /**
+     *
+     */
+    private Integer status;
 
     /**
      * 创建时间
@@ -46,10 +58,6 @@ public class TransactionVO implements Serializable {
      */
     private Date updateTime;
 
-    /**
-     * 创建用户信息
-     */
-    private UserVO user;
 
     /**
      * 封装类转对象

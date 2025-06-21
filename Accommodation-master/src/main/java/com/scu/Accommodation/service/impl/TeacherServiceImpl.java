@@ -77,32 +77,27 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
         }
         // todo 从对象中取值
         Long id = teacherQueryRequest.getId();
-        Long notId = teacherQueryRequest.getNotId();
+        String unionId = teacherQueryRequest.getUnionId();
+        String teaName = teacherQueryRequest.getTeaName();
+        Integer sex = teacherQueryRequest.getSex();
+        String college = teacherQueryRequest.getCollege();
         String title = teacherQueryRequest.getTitle();
-        String content = teacherQueryRequest.getContent();
-        String searchText = teacherQueryRequest.getSearchText();
+        String roomId = teacherQueryRequest.getRoomId();
+        String phone = teacherQueryRequest.getPhone();
         String sortField = teacherQueryRequest.getSortField();
         String sortOrder = teacherQueryRequest.getSortOrder();
-        List<String> tagList = teacherQueryRequest.getTags();
         Long userId = teacherQueryRequest.getUserId();
         // todo 补充需要的查询条件
-        // 从多字段中搜索
-        if (StringUtils.isNotBlank(searchText)) {
-            // 需要拼接查询条件
-            queryWrapper.and(qw -> qw.like("title", searchText).or().like("content", searchText));
-        }
         // 模糊查询
-        queryWrapper.like(StringUtils.isNotBlank(title), "title", title);
-        queryWrapper.like(StringUtils.isNotBlank(content), "content", content);
-        // JSON 数组查询
-        if (CollUtil.isNotEmpty(tagList)) {
-            for (String tag : tagList) {
-                queryWrapper.like("tags", "\"" + tag + "\"");
-            }
-        }
+        queryWrapper.like(StringUtils.isNotBlank(roomId), "roomId", roomId);
+        queryWrapper.like(StringUtils.isNotBlank(teaName), "teaName", teaName);
+        queryWrapper.like(StringUtils.isNotBlank(college), "college", college);
         // 精确查询
-        queryWrapper.ne(ObjectUtils.isNotEmpty(notId), "id", notId);
         queryWrapper.eq(ObjectUtils.isNotEmpty(id), "id", id);
+        queryWrapper.eq(StringUtils.isNotBlank(unionId), "unionId", unionId);
+        queryWrapper.eq(StringUtils.isNotBlank(phone), "phone", phone);
+        queryWrapper.eq(StringUtils.isNotBlank(title), "title", title);
+        queryWrapper.eq(ObjectUtils.isNotEmpty(sex), "sex", sex);
         queryWrapper.eq(ObjectUtils.isNotEmpty(userId), "userId", userId);
         // 排序规则
         queryWrapper.orderBy(SqlUtils.validSortField(sortField),
