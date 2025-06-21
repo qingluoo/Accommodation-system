@@ -1,6 +1,6 @@
 package com.scu.Accommodation.mapper;
 
-import com.scu.Accommodation.model.entity.Houseparents;
+import com.scu.Accommodation.model.entity.HouseParents;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @createDate 2025-06-21 09:26:20
 * @Entity com.scu.Accommodation.model.entity.Houseparents
 */
-public interface HouseparentsMapper extends BaseMapper<Houseparents> {
+public interface HouseParentsMapper extends BaseMapper<HouseParents> {
 
 }
 

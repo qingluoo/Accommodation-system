@@ -10,9 +10,9 @@ import lombok.Data;
  * 
  * @TableName housemanger
  */
-@TableName(value ="housemanger")
+@TableName(value ="housemanager")
 @Data
-public class Housemanger {
+public class HouseManager {
     /**
      * 
      */
