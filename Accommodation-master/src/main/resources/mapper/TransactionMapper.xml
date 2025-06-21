@@ -11,13 +11,14 @@
             <result property="roleId" column="roleId" />
             <result property="description" column="description" />
             <result property="type" column="type" />
+            <result property="status" column="status" />
             <result property="createTime" column="createTime" />
             <result property="updateTime" column="updateTime" />
             <result property="isDelete" column="isDelete" />
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,unionId,name,roleId,description,type,
+        id,unionId,name,roleId,description,type,status,
         createTime,updateTime,isDelete
     </sql>
 </mapper>

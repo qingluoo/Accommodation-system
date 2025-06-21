@@ -46,6 +46,11 @@ public class Transaction {
     private Integer type;
 
     /**
+     *
+     */
+    private Integer status;
+
+    /**
      * 
      */
     private Date createTime;
