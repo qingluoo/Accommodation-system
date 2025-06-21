@@ -8,11 +8,11 @@ import lombok.Data;
 
 /**
  * 
- * @TableName housemanger
+ * @TableName housemanager
  */
 @TableName(value ="housemanager")
 @Data
-public class HouseManager {
+public class Housemanager {
     /**
      * 
      */

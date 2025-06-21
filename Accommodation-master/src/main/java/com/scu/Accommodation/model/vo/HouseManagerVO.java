@@ -1,13 +1,11 @@
 package com.scu.Accommodation.model.vo;
 
-import cn.hutool.json.JSONUtil;
-import com.scu.Accommodation.model.entity.HouseManager;
+import com.scu.Accommodation.model.entity.Housemanager;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 /**
  * 宿舍总管视图
@@ -60,11 +58,11 @@ public class HouseManagerVO implements Serializable {
      * @param housemanagerVO
      * @return
      */
-    public static HouseManager voToObj(HouseManagerVO housemanagerVO) {
+    public static Housemanager voToObj(HouseManagerVO housemanagerVO) {
         if (housemanagerVO == null) {
             return null;
         }
-        HouseManager housemanager = new HouseManager();
+        Housemanager housemanager = new Housemanager();
         BeanUtils.copyProperties(housemanagerVO, housemanager);
         return housemanager;
     }
@@ -75,7 +73,7 @@ public class HouseManagerVO implements Serializable {
      * @param housemanager
      * @return
      */
-    public static HouseManagerVO objToVo(HouseManager housemanager) {
+    public static HouseManagerVO objToVo(Housemanager housemanager) {
         if (housemanager == null) {
             return null;
         }

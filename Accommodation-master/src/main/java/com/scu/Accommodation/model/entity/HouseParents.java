@@ -12,7 +12,7 @@ import lombok.Data;
  */
 @TableName(value ="houseparents")
 @Data
-public class HouseParents {
+public class Houseparents {
     /**
      * 
      */

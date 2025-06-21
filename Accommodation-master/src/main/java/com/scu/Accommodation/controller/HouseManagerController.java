@@ -13,7 +13,7 @@ import com.scu.Accommodation.model.dto.housemanager.HouseManagerAddRequest;
 import com.scu.Accommodation.model.dto.housemanager.HouseManagerEditRequest;
 import com.scu.Accommodation.model.dto.housemanager.HouseManagerQueryRequest;
 import com.scu.Accommodation.model.dto.housemanager.HouseManagerUpdateRequest;
-import com.scu.Accommodation.model.entity.HouseManager;
+import com.scu.Accommodation.model.entity.Housemanager;
 import com.scu.Accommodation.model.entity.User;
 import com.scu.Accommodation.model.vo.HouseManagerVO;
 import com.scu.Accommodation.service.HouseManagerService;
@@ -53,7 +53,7 @@ public class HouseManagerController {
     public BaseResponse<Long> addHouseManager(@RequestBody HouseManagerAddRequest housemanagerAddRequest, HttpServletRequest request) {
         ThrowUtils.throwIf(housemanagerAddRequest == null, ErrorCode.PARAMS_ERROR);
         // todo 在此处将实体类和 DTO 进行转换
-        HouseManager housemanager = new HouseManager();
+        Housemanager housemanager = new Housemanager();
         BeanUtils.copyProperties(housemanagerAddRequest, housemanager);
         // 数据校验
         housemanagerService.validHouseManager(housemanager, true);
@@ -80,8 +80,8 @@ public class HouseManagerController {
         User user = userService.getLoginUser(request);
         long id = deleteRequest.getId();
         // 判断是否存在
-        HouseManager oldHouseManager = housemanagerService.getById(id);
-        ThrowUtils.throwIf(oldHouseManager == null, ErrorCode.NOT_FOUND_ERROR);
+        Housemanager oldHousemanager = housemanagerService.getById(id);
+        ThrowUtils.throwIf(oldHousemanager == null, ErrorCode.NOT_FOUND_ERROR);
         // 操作数据库
         boolean result = housemanagerService.removeById(id);
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
@@ -101,14 +101,14 @@ public class HouseManagerController {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
         // todo 在此处将实体类和 DTO 进行转换
-        HouseManager housemanager = new HouseManager();
+        Housemanager housemanager = new Housemanager();
         BeanUtils.copyProperties(housemanagerUpdateRequest, housemanager);
         // 数据校验
         housemanagerService.validHouseManager(housemanager, false);
         // 判断是否存在
         long id = housemanagerUpdateRequest.getId();
-        HouseManager oldHouseManager = housemanagerService.getById(id);
-        ThrowUtils.throwIf(oldHouseManager == null, ErrorCode.NOT_FOUND_ERROR);
+        Housemanager oldHousemanager = housemanagerService.getById(id);
+        ThrowUtils.throwIf(oldHousemanager == null, ErrorCode.NOT_FOUND_ERROR);
         // 操作数据库
         boolean result = housemanagerService.updateById(housemanager);
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
@@ -125,7 +125,7 @@ public class HouseManagerController {
     public BaseResponse<HouseManagerVO> getHouseManagerVOById(long id, HttpServletRequest request) {
         ThrowUtils.throwIf(id <= 0, ErrorCode.PARAMS_ERROR);
         // 查询数据库
-        HouseManager housemanager = housemanagerService.getById(id);
+        Housemanager housemanager = housemanagerService.getById(id);
         ThrowUtils.throwIf(housemanager == null, ErrorCode.NOT_FOUND_ERROR);
         // 获取封装类
         return ResultUtils.success(housemanagerService.getHouseManagerVO(housemanager, request));
@@ -139,11 +139,11 @@ public class HouseManagerController {
      */
     @PostMapping("/list/page")
     @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
-    public BaseResponse<Page<HouseManager>> listHouseManagerByPage(@RequestBody HouseManagerQueryRequest housemanagerQueryRequest) {
+    public BaseResponse<Page<Housemanager>> listHouseManagerByPage(@RequestBody HouseManagerQueryRequest housemanagerQueryRequest) {
         long current = housemanagerQueryRequest.getCurrent();
         long size = housemanagerQueryRequest.getPageSize();
         // 查询数据库
-        Page<HouseManager> housemanagerPage = housemanagerService.page(new Page<>(current, size),
+        Page<Housemanager> housemanagerPage = housemanagerService.page(new Page<>(current, size),
                 housemanagerService.getQueryWrapper(housemanagerQueryRequest));
         return ResultUtils.success(housemanagerPage);
     }
@@ -163,7 +163,7 @@ public class HouseManagerController {
         // 限制爬虫
         ThrowUtils.throwIf(size > 20, ErrorCode.PARAMS_ERROR);
         // 查询数据库
-        Page<HouseManager> housemanagerPage = housemanagerService.page(new Page<>(current, size),
+        Page<Housemanager> housemanagerPage = housemanagerService.page(new Page<>(current, size),
                 housemanagerService.getQueryWrapper(housemanagerQueryRequest));
         // 获取封装类
         return ResultUtils.success(housemanagerService.getHouseManagerVOPage(housemanagerPage, request));
@@ -188,7 +188,7 @@ public class HouseManagerController {
         // 限制爬虫
         ThrowUtils.throwIf(size > 20, ErrorCode.PARAMS_ERROR);
         // 查询数据库
-        Page<HouseManager> housemanagerPage = housemanagerService.page(new Page<>(current, size),
+        Page<Housemanager> housemanagerPage = housemanagerService.page(new Page<>(current, size),
                 housemanagerService.getQueryWrapper(housemanagerQueryRequest));
         // 获取封装类
         return ResultUtils.success(housemanagerService.getHouseManagerVOPage(housemanagerPage, request));
@@ -207,15 +207,15 @@ public class HouseManagerController {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
         // todo 在此处将实体类和 DTO 进行转换
-        HouseManager housemanager = new HouseManager();
+        Housemanager housemanager = new Housemanager();
         BeanUtils.copyProperties(housemanagerEditRequest, housemanager);
         // 数据校验
         housemanagerService.validHouseManager(housemanager, false);
         User loginUser = userService.getLoginUser(request);
         // 判断是否存在
         long id = housemanagerEditRequest.getId();
-        HouseManager oldHouseManager = housemanagerService.getById(id);
-        ThrowUtils.throwIf(oldHouseManager == null, ErrorCode.NOT_FOUND_ERROR);
+        Housemanager oldHousemanager = housemanagerService.getById(id);
+        ThrowUtils.throwIf(oldHousemanager == null, ErrorCode.NOT_FOUND_ERROR);
         // 操作数据库
         boolean result = housemanagerService.updateById(housemanager);
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);

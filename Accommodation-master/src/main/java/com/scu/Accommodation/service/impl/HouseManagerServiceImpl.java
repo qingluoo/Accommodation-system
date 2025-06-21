@@ -7,9 +7,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.scu.Accommodation.common.ErrorCode;
 import com.scu.Accommodation.constant.CommonConstant;
 import com.scu.Accommodation.exception.ThrowUtils;
-import com.scu.Accommodation.mapper.HouseManagerMapper;
+import com.scu.Accommodation.mapper.HousemanagerMapper;
 import com.scu.Accommodation.model.dto.housemanager.HouseManagerQueryRequest;
-import com.scu.Accommodation.model.entity.HouseManager;
+import com.scu.Accommodation.model.entity.Housemanager;
 import com.scu.Accommodation.model.vo.HouseManagerVO;
 import com.scu.Accommodation.service.HouseManagerService;
 import com.scu.Accommodation.service.UserService;
@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @Slf4j
-public class HouseManagerServiceImpl extends ServiceImpl<HouseManagerMapper, HouseManager> implements HouseManagerService {
+public class HouseManagerServiceImpl extends ServiceImpl<HousemanagerMapper, Housemanager> implements HouseManagerService {
 
     @Resource
     private UserService userService;
@@ -42,7 +42,7 @@ public class HouseManagerServiceImpl extends ServiceImpl<HouseManagerMapper, Hou
      * @param add      对创建的数据进行校验
      */
     @Override
-    public void validHouseManager(HouseManager housemanager, boolean add) {
+    public void validHouseManager(Housemanager housemanager, boolean add) {
         ThrowUtils.throwIf(housemanager == null, ErrorCode.PARAMS_ERROR);
         // todo 从对象中取值
         String unionId = housemanager.getUnionId();
@@ -64,8 +64,8 @@ public class HouseManagerServiceImpl extends ServiceImpl<HouseManagerMapper, Hou
      * @return
      */
     @Override
-    public QueryWrapper<HouseManager> getQueryWrapper(HouseManagerQueryRequest housemanagerQueryRequest) {
-        QueryWrapper<HouseManager> queryWrapper = new QueryWrapper<>();
+    public QueryWrapper<Housemanager> getQueryWrapper(HouseManagerQueryRequest housemanagerQueryRequest) {
+        QueryWrapper<Housemanager> queryWrapper = new QueryWrapper<>();
         if (housemanagerQueryRequest == null) {
             return queryWrapper;
         }
@@ -113,7 +113,7 @@ public class HouseManagerServiceImpl extends ServiceImpl<HouseManagerMapper, Hou
      * @return
      */
     @Override
-    public HouseManagerVO getHouseManagerVO(HouseManager housemanager, HttpServletRequest request) {
+    public HouseManagerVO getHouseManagerVO(Housemanager housemanager, HttpServletRequest request) {
         // 对象转封装类
         HouseManagerVO housemanagerVO = HouseManagerVO.objToVo(housemanager);
 
@@ -128,8 +128,8 @@ public class HouseManagerServiceImpl extends ServiceImpl<HouseManagerMapper, Hou
      * @return
      */
     @Override
-    public Page<HouseManagerVO> getHouseManagerVOPage(Page<HouseManager> housemanagerPage, HttpServletRequest request) {
-        List<HouseManager> housemanagerList = housemanagerPage.getRecords();
+    public Page<HouseManagerVO> getHouseManagerVOPage(Page<Housemanager> housemanagerPage, HttpServletRequest request) {
+        List<Housemanager> housemanagerList = housemanagerPage.getRecords();
         Page<HouseManagerVO> housemanagerVOPage = new Page<>(housemanagerPage.getCurrent(), housemanagerPage.getSize(), housemanagerPage.getTotal());
         if (CollUtil.isEmpty(housemanagerList)) {
             return housemanagerVOPage;
