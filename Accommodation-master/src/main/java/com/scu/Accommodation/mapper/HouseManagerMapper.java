@@ -1,7 +1,7 @@
 package com.scu.Accommodation.mapper;
 
-import com.scu.Accommodation.model.entity.Housemanager;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.scu.Accommodation.model.entity.Housemanager;
 
 /**
 * @author qingluo

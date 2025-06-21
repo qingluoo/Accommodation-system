@@ -31,9 +31,6 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ApartmentServiceImpl extends ServiceImpl<ApartmentMapper, Apartment> implements ApartmentService {
 
-    @Resource
-    private ApartmentService apartmentService;
-
     /**
      * 校验数据
      *
