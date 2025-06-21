@@ -1,6 +1,6 @@
-package ${packageName}.model.dto.${dataKey};
+package com.scu.Accommodation.model.dto.houseparents;
 
-import ${packageName}.common.PageRequest;
+import com.scu.Accommodation.common.PageRequest;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -8,12 +8,12 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 查询${dataName}请求
+ * 查询宿管请求
  *
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class ${upperDataKey}QueryRequest extends PageRequest implements Serializable {
+public class HouseparentsQueryRequest extends PageRequest implements Serializable {
 
     /**
      * id

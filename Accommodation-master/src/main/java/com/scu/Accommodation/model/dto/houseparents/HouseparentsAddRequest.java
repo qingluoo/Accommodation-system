@@ -1,4 +1,4 @@
-package ${packageName}.model.dto.${dataKey};
+package com.scu.Accommodation.model.dto.houseparents;
 
 import lombok.Data;
 
@@ -6,16 +6,11 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 更新${dataName}请求
+ * 创建宿管请求
  *
  */
 @Data
-public class ${upperDataKey}UpdateRequest implements Serializable {
-
-    /**
-     * id
-     */
-    private Long id;
+public class HouseparentsAddRequest implements Serializable {
 
     /**
      * 标题
