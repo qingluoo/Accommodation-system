@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scu.Accommodation.mapper.ApartmentMapper">
+
+    <resultMap id="BaseResultMap" type="com.scu.Accommodation.model.entity.Apartment">
+            <id property="id" column="id" />
+            <result property="park" column="park" />
+            <result property="building" column="building" />
+            <result property="room" column="room" />
+            <result property="bedNum" column="bedNum" />
+            <result property="liveNum" column="liveNum" />
+            <result property="roomType" column="roomType" />
+            <result property="isFull" column="isFull" />
+            <result property="isDelete" column="isDelete" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,park,building,room,bedNum,liveNum,
+        roomType,isFull,isDelete
+    </sql>
+</mapper>
