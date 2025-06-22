@@ -51,6 +51,11 @@ public class Transaction {
     private Integer status;
 
     /**
+     *
+     */
+    private String reason;
+
+    /**
      * 
      */
     private Date createTime;

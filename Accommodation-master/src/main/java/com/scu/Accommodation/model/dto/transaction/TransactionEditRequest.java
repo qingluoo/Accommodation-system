@@ -43,6 +43,11 @@ public class TransactionEditRequest implements Serializable {
      */
     private Integer status;
 
+    /**
+     *
+     */
+    private String reason;
+
     private long userId;
 
     private static final long serialVersionUID = 1L;

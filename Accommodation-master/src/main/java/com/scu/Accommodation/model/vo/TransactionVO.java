@@ -49,6 +49,11 @@ public class TransactionVO implements Serializable {
     private Integer status;
 
     /**
+     *
+     */
+    private String reason;
+
+    /**
      * 创建时间
      */
     private Date createTime;
