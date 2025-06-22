@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.util.Date;
+
 /**
  * 
  * @TableName apartment
@@ -53,6 +55,16 @@ public class Apartment {
      * 
      */
     private Integer isFull;
+
+    /**
+     *
+     */
+    private Date createTime;
+
+    /**
+     *
+     */
+    private Date updateTime;
 
     /**
      * 

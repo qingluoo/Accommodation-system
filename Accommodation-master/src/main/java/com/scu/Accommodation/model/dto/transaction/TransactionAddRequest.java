@@ -13,6 +13,7 @@ import java.util.List;
 public class TransactionAddRequest implements Serializable {
 
     private long id;
+
     /**
      *
      */

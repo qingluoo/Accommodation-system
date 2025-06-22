@@ -20,5 +20,7 @@ public @interface AuthCheck {
      */
     String mustRole() default "";
 
+    String mustCode() default "";
+
 }
 
