@@ -67,35 +67,31 @@ public class ApartmentServiceImpl extends ServiceImpl<ApartmentMapper, Apartment
         if (apartmentQueryRequest == null) {
             return queryWrapper;
         }
-        // todo 从对象中取值
+        // 从请求对象中取值
         Long id = apartmentQueryRequest.getId();
-        Long notId = apartmentQueryRequest.getNotId();
-        String title = apartmentQueryRequest.getTitle();
-        String content = apartmentQueryRequest.getContent();
-        String searchText = apartmentQueryRequest.getSearchText();
+        String park = apartmentQueryRequest.getPark();
+        String building = apartmentQueryRequest.getBuilding();
+        String room = apartmentQueryRequest.getRoom();
+        Integer bedNum = apartmentQueryRequest.getBedNum();
+        Integer liveNum = apartmentQueryRequest.getLiveNum();
+        String roomType = apartmentQueryRequest.getRoomType();
+        Integer isFull = apartmentQueryRequest.getIsFull();
+
         String sortField = apartmentQueryRequest.getSortField();
         String sortOrder = apartmentQueryRequest.getSortOrder();
-        List<String> tagList = apartmentQueryRequest.getTags();
-        Long apartmentId = apartmentQueryRequest.getId();
-        // todo 补充需要的查询条件
-        // 从多字段中搜索
-        if (StringUtils.isNotBlank(searchText)) {
-            // 需要拼接查询条件
-            queryWrapper.and(qw -> qw.like("title", searchText).or().like("content", searchText));
-        }
+
         // 模糊查询
-        queryWrapper.like(StringUtils.isNotBlank(title), "title", title);
-        queryWrapper.like(StringUtils.isNotBlank(content), "content", content);
-        // JSON 数组查询
-        if (CollUtil.isNotEmpty(tagList)) {
-            for (String tag : tagList) {
-                queryWrapper.like("tags", "\"" + tag + "\"");
-            }
-        }
+        queryWrapper.like(StringUtils.isNotBlank(park), "park", park);
+        queryWrapper.like(StringUtils.isNotBlank(building), "building", building);
+        queryWrapper.like(StringUtils.isNotBlank(room), "room", room);
+        queryWrapper.like(StringUtils.isNotBlank(roomType), "roomType", roomType);
+        queryWrapper.like(ObjectUtils.isNotEmpty(liveNum), "liveNum", liveNum);
+
         // 精确查询
-        queryWrapper.ne(ObjectUtils.isNotEmpty(notId), "id", notId);
-        queryWrapper.eq(ObjectUtils.isNotEmpty(id), "id", id);
-        queryWrapper.eq(ObjectUtils.isNotEmpty(apartmentId), "apartmentId", apartmentId);
+        queryWrapper.ne(ObjectUtils.isNotEmpty(id), "id", id);
+        queryWrapper.eq(ObjectUtils.isNotEmpty(bedNum), "bedNum", bedNum);
+        queryWrapper.eq(ObjectUtils.isNotEmpty(liveNum), "liveNum", liveNum);
+        queryWrapper.eq(ObjectUtils.isNotEmpty(isFull), "isFull", isFull);
         // 排序规则
         queryWrapper.orderBy(SqlUtils.validSortField(sortField),
                 sortOrder.equals(CommonConstant.SORT_ORDER_ASC),

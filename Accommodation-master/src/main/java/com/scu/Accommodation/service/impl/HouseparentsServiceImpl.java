@@ -75,33 +75,25 @@ public class HouseparentsServiceImpl extends ServiceImpl<HouseparentsMapper, Hou
         }
         // todo 从对象中取值
         Long id = houseparentsQueryRequest.getId();
-        Long notId = houseparentsQueryRequest.getNotId();
-        String title = houseparentsQueryRequest.getTitle();
-        String content = houseparentsQueryRequest.getContent();
-        String searchText = houseparentsQueryRequest.getSearchText();
+        String unionId = houseparentsQueryRequest.getUnionId();
+        String name = houseparentsQueryRequest.getName();
+        String phone = houseparentsQueryRequest.getPhone();
+        String park = houseparentsQueryRequest.getPark();
+        String building = houseparentsQueryRequest.getBuilding();
         String sortField = houseparentsQueryRequest.getSortField();
         String sortOrder = houseparentsQueryRequest.getSortOrder();
-        List<String> tagList = houseparentsQueryRequest.getTags();
         Long userId = houseparentsQueryRequest.getUserId();
         // todo 补充需要的查询条件
-        // 从多字段中搜索
-        if (StringUtils.isNotBlank(searchText)) {
-            // 需要拼接查询条件
-            queryWrapper.and(qw -> qw.like("title", searchText).or().like("content", searchText));
-        }
-        // 模糊查询
-        queryWrapper.like(StringUtils.isNotBlank(title), "title", title);
-        queryWrapper.like(StringUtils.isNotBlank(content), "content", content);
-        // JSON 数组查询
-        if (CollUtil.isNotEmpty(tagList)) {
-            for (String tag : tagList) {
-                queryWrapper.like("tags", "\"" + tag + "\"");
-            }
-        }
+        // 模糊
+        queryWrapper.like(StringUtils.isNotBlank(name), "name", name);
+        queryWrapper.like(StringUtils.isNotBlank(building), "building", building);
         // 精确查询
-        queryWrapper.ne(ObjectUtils.isNotEmpty(notId), "id", notId);
-        queryWrapper.eq(ObjectUtils.isNotEmpty(id), "id", id);
+        queryWrapper.ne(ObjectUtils.isNotEmpty(id), "id", id);
         queryWrapper.eq(ObjectUtils.isNotEmpty(userId), "userId", userId);
+        queryWrapper.eq(ObjectUtils.isNotEmpty(unionId), "unionId", unionId);
+        queryWrapper.eq(ObjectUtils.isNotEmpty(phone), "phone", phone);
+        queryWrapper.eq(ObjectUtils.isNotEmpty(park), "park", park);
+        queryWrapper.eq(ObjectUtils.isNotEmpty(building), "building", building);
         // 排序规则
         queryWrapper.orderBy(SqlUtils.validSortField(sortField),
                 sortOrder.equals(CommonConstant.SORT_ORDER_ASC),

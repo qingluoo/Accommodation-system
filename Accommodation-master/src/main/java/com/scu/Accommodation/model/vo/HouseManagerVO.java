@@ -14,25 +14,22 @@ import java.util.Date;
 @Data
 public class HouseManagerVO implements Serializable {
 
-    /**
-     * id
-     */
     private Long id;
 
     /**
-     * 标题
+     * 
      */
-    private String title;
+    private String unionId;
 
     /**
-     * 内容
+     * 
      */
-    private String content;
+    private String name;
 
     /**
-     * 创建用户 id
+     * 
      */
-    private Long userId;
+    private String phone;
 
     /**
      * 创建时间
@@ -43,6 +40,12 @@ public class HouseManagerVO implements Serializable {
      * 更新时间
      */
     private Date updateTime;
+
+    /**
+     *
+     */
+    private Integer isDelete;
+
 
 
     /**

@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * 查询公寓请求
@@ -23,32 +22,51 @@ public class ApartmentQueryRequest extends PageRequest implements Serializable {
     /**
      * id
      */
-    private Long notId;
+    private String park;
 
     /**
      * 搜索词
      */
-    private String searchText;
+    private String building;
 
     /**
-     * 标题
+     * 房间
      */
-    private String title;
+    private String room;
 
     /**
-     * 内容
+     * 床号
      */
-    private String content;
+    private Integer bedNum;
 
     /**
-     * 标签列表
+     * 人数
      */
-    private List<String> tags;
+    private Integer liveNum;
+
+    /**
+     * 房间类型
+     */
+    private String roomType;
+
+    /**
+     * 是否满员
+     */
+    private Integer isFull;
+
+
+    /**
+     * 排序
+     */
+    private String sortField;
+
 
     /**
      * 创建用户 id
      */
     private Long userId;
+        
+    private Integer isDelete;
 
     private static final long serialVersionUID = 1L;
 }

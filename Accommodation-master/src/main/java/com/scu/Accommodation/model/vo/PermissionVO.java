@@ -16,20 +16,37 @@ import java.util.List;
 @Data
 public class PermissionVO implements Serializable {
 
-    /**
-     * id
-     */
-    private Long id;
+      private Long id;
 
     /**
-     * 标题
+     * 
      */
-    private String title;
+    private Integer roleId;
 
     /**
-     * 内容
+     * 
      */
-    private String content;
+    private String roleName;
+
+    /**
+     * 
+     */
+    private String name;
+
+    /**
+     * 
+     */
+    private String code;
+
+    /**
+     * 
+     */
+    private String description;
+
+    /**
+     * 
+     */
+    private Integer isDelete;
 
     /**
      * 创建用户 id

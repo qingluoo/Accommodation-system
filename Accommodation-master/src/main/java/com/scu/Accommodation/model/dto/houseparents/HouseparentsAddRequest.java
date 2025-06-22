@@ -15,17 +15,43 @@ public class HouseparentsAddRequest implements Serializable {
     /**
      * 标题
      */
-    private String title;
+    private Long id;
 
     /**
-     * 内容
+     * 
      */
-    private String content;
+    private String unionId;
 
     /**
-     * 标签列表
+     * 
      */
-    private List<String> tags;
+    private String name;
+
+    /**
+     * 
+     */
+    private String phone;
+
+    /**
+     * 
+     */
+    private String park;
+
+    /**
+     * 
+     */
+    private String building;
+
+    /**
+     * 
+     */
+    private Integer isDelete;
+
+    /**
+     *
+     */
+    private Long userId;
+
 
     private static final long serialVersionUID = 1L;
 }

@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
-import java.util.List;
+
 
 /**
  * 查询宿舍总管请求
@@ -15,40 +15,30 @@ import java.util.List;
 @Data
 public class HouseManagerQueryRequest extends PageRequest implements Serializable {
 
-    /**
-     * id
-     */
     private Long id;
 
     /**
-     * id
+     * 
      */
-    private Long notId;
+    private String unionId;
 
     /**
-     * 搜索词
+     * 
      */
-    private String searchText;
+    private String name;
 
     /**
-     * 标题
+     * 
      */
-    private String title;
+    private String phone;
 
-    /**
-     * 内容
-     */
-    private String content;
 
-    /**
-     * 标签列表
-     */
-    private List<String> tags;
+    private Integer isDelete;
 
-    /**
-     * 创建用户 id
-     */
+
     private Long userId;
 
+
     private static final long serialVersionUID = 1L;
+
 }

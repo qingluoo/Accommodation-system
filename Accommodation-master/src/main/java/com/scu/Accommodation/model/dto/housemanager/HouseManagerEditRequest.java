@@ -3,7 +3,7 @@ package com.scu.Accommodation.model.dto.housemanager;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.List;
+
 
 /**
  * 编辑宿舍总管请求
@@ -13,24 +13,35 @@ import java.util.List;
 public class HouseManagerEditRequest implements Serializable {
 
     /**
-     * id
+     *
      */
     private Long id;
 
     /**
-     * 标题
+     * 
      */
-    private String title;
+    private String unionId;
 
     /**
-     * 内容
+     * 
      */
-    private String content;
+    private String name;
 
     /**
-     * 标签列表
+     * 
      */
-    private List<String> tags;
+    private String phone;
+
+    /**
+     *
+     */
+    private Integer isDelete;
+
+    /**
+     *
+     */
+    private Long userId;
 
     private static final long serialVersionUID = 1L;
+
 }

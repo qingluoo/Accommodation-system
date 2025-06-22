@@ -12,20 +12,41 @@ import java.util.List;
 @Data
 public class PermissionAddRequest implements Serializable {
 
-    /**
-     * 标题
-     */
-    private String title;
+    private Long id;
 
     /**
-     * 内容
+     * 
      */
-    private String content;
+    private Integer roleId;
 
     /**
-     * 标签列表
+     * 
      */
-    private List<String> tags;
+    private String roleName;
+
+    /**
+     * 
+     */
+    private String name;
+
+    /**
+     * 
+     */
+    private String code;
+
+    /**
+     * 
+     */
+    private String description;
+
+
+    /**
+     * 
+     */
+    private Integer isDelete;
+
+    private Long userId;
+
 
     private static final long serialVersionUID = 1L;
 }

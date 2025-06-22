@@ -17,25 +17,35 @@ public class HouseparentsVO implements Serializable {
     /**
      * id
      */
-    private Long id;
+   private Long id;
 
     /**
-     * 标题
+     * 
      */
-    private String title;
+    private String unionId;
 
     /**
-     * 内容
+     * 
      */
-    private String content;
+    private String name;
 
     /**
-     * 创建用户 id
+     * 
      */
-    private Long userId;
+    private String phone;
 
     /**
-     * 创建时间
+     * 
+     */
+    private String park;
+
+    /**
+     * 
+     */
+    private String building;
+
+    /**
+     *
      */
     private Date createTime;
 
@@ -44,6 +54,10 @@ public class HouseparentsVO implements Serializable {
      */
     private Date updateTime;
 
+    /**
+     *
+     */
+    private Integer isDelete;
 
     /**
      * 创建用户信息

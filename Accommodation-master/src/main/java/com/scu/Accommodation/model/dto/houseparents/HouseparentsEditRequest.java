@@ -13,24 +13,42 @@ import java.util.List;
 public class HouseparentsEditRequest implements Serializable {
 
     /**
-     * id
+     *
      */
     private Long id;
 
     /**
-     * 标题
+     * 
      */
-    private String title;
+    private String unionId;
 
     /**
-     * 内容
+     * 
      */
-    private String content;
+    private String name;
 
     /**
-     * 标签列表
+     * 
      */
-    private List<String> tags;
+    private String phone;
+
+    /**
+     * 
+     */
+    private String park;
+
+    /**
+     * 
+     */
+    private String building;
+
+
+    /**
+     *
+     */
+    private Integer isDelete;
+
+    private Long userId;
 
     private static final long serialVersionUID = 1L;
 }

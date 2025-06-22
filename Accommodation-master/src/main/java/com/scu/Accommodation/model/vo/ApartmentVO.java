@@ -1,13 +1,13 @@
 package com.scu.Accommodation.model.vo;
 
-import cn.hutool.json.JSONUtil;
+
 import com.scu.Accommodation.model.entity.Apartment;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
+
 
 /**
  * 公寓视图
@@ -22,19 +22,34 @@ public class ApartmentVO implements Serializable {
     private Long id;
 
     /**
-     * 标题
+     * 楼栋
      */
-    private String title;
+    private String building;
 
     /**
-     * 内容
+     * 房间
      */
-    private String content;
+    private String room;
 
     /**
-     * 创建用户 id
+     * 房间类型
      */
-    private Long userId;
+    private String roomType;
+
+    /**
+     * 床位数
+     */
+    private Integer bedNum;
+
+    /**
+     * 居住人数
+     */
+    private Integer liveNum;
+
+    /**
+     * 是否满床
+     */
+    private Integer isFull;
 
     /**
      * 创建时间
@@ -47,9 +62,11 @@ public class ApartmentVO implements Serializable {
     private Date updateTime;
 
     /**
-     * 创建用户信息
+     * 是否删除
      */
-    private UserVO user;
+    private Integer isDelete;
+
+
 
     /**
      * 封装类转对象

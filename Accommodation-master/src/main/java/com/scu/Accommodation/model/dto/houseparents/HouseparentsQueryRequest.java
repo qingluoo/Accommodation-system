@@ -15,35 +15,40 @@ import java.util.List;
 @Data
 public class HouseparentsQueryRequest extends PageRequest implements Serializable {
 
-    /**
-     * id
-     */
+   /**
+    * 主键
+    */
     private Long id;
 
     /**
-     * id
+     * 
      */
-    private Long notId;
+    private String unionId;
 
     /**
-     * 搜索词
+     * 
      */
-    private String searchText;
+    private String name;
 
     /**
-     * 标题
+     * 
      */
-    private String title;
+    private String phone;
 
     /**
-     * 内容
+     * 
      */
-    private String content;
+    private String park;
 
     /**
-     * 标签列表
+     * 
      */
-    private List<String> tags;
+    private String building;
+
+    /**
+     * 
+     */
+    private Integer isDelete;
 
     /**
      * 创建用户 id

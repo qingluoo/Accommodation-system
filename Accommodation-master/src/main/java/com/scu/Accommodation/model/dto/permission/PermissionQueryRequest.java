@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * 查询权限请求
@@ -15,35 +14,37 @@ import java.util.List;
 @Data
 public class PermissionQueryRequest extends PageRequest implements Serializable {
 
-    /**
-     * id
-     */
     private Long id;
 
     /**
-     * id
+     * 
      */
-    private Long notId;
+    private Integer roleId;
 
     /**
-     * 搜索词
+     * 
      */
-    private String searchText;
+    private String roleName;
 
     /**
-     * 标题
+     * 
      */
-    private String title;
+    private String name;
 
     /**
-     * 内容
+     * 
      */
-    private String content;
+    private String code;
 
     /**
-     * 标签列表
+     * 
      */
-    private List<String> tags;
+    private String description;
+
+    /**
+     * 
+     */
+    private Integer isDelete;
 
     /**
      * 创建用户 id

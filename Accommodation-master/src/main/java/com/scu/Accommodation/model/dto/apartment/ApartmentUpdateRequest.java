@@ -3,12 +3,7 @@ package com.scu.Accommodation.model.dto.apartment;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.List;
 
-/**
- * 更新公寓请求
- *
- */
 @Data
 public class ApartmentUpdateRequest implements Serializable {
 
@@ -18,19 +13,43 @@ public class ApartmentUpdateRequest implements Serializable {
     private Long id;
 
     /**
-     * 标题
+     * 园区
      */
-    private String title;
+    private String park;
 
     /**
-     * 内容
+     * 楼栋
      */
-    private String content;
+    private String building;
 
     /**
-     * 标签列表
+     * 房间
      */
-    private List<String> tags;
+    private String room;
+
+    /**
+     * 床位数
+     */
+    private Integer bedNum;
+
+    /**
+     * 居住人数
+     */
+    private Integer liveNum;
+
+    /**
+     * 房间类型
+     */
+    private String roomType;
+
+    /**
+     * 是否满员
+     */
+    private Integer isFull;
+
+    private Integer isDelete;
+
+    private Long userId;
 
     private static final long serialVersionUID = 1L;
 }

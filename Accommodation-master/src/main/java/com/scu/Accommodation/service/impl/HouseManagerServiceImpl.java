@@ -71,33 +71,20 @@ public class HouseManagerServiceImpl extends ServiceImpl<HousemanagerMapper, Hou
         }
         // todo 从对象中取值
         Long id = housemanagerQueryRequest.getId();
-        Long notId = housemanagerQueryRequest.getNotId();
-        String title = housemanagerQueryRequest.getTitle();
-        String content = housemanagerQueryRequest.getContent();
-        String searchText = housemanagerQueryRequest.getSearchText();
+        String unionId = housemanagerQueryRequest.getUnionId();
+        String name = housemanagerQueryRequest.getName();
+        String phone = housemanagerQueryRequest.getPhone();
         String sortField = housemanagerQueryRequest.getSortField();
         String sortOrder = housemanagerQueryRequest.getSortOrder();
-        List<String> tagList = housemanagerQueryRequest.getTags();
-        Long userId = housemanagerQueryRequest.getUserId();
         // todo 补充需要的查询条件
-        // 从多字段中搜索
-        if (StringUtils.isNotBlank(searchText)) {
-            // 需要拼接查询条件
-            queryWrapper.and(qw -> qw.like("title", searchText).or().like("content", searchText));
-        }
         // 模糊查询
-        queryWrapper.like(StringUtils.isNotBlank(title), "title", title);
-        queryWrapper.like(StringUtils.isNotBlank(content), "content", content);
-        // JSON 数组查询
-        if (CollUtil.isNotEmpty(tagList)) {
-            for (String tag : tagList) {
-                queryWrapper.like("tags", "\"" + tag + "\"");
-            }
-        }
+        queryWrapper.like(StringUtils.isNotBlank(name), "name", name);
+        queryWrapper.like(StringUtils.isNotBlank(phone), "phone", phone);
+
         // 精确查询
-        queryWrapper.ne(ObjectUtils.isNotEmpty(notId), "id", notId);
-        queryWrapper.eq(ObjectUtils.isNotEmpty(id), "id", id);
-        queryWrapper.eq(ObjectUtils.isNotEmpty(userId), "userId", userId);
+        queryWrapper.ne(ObjectUtils.isNotEmpty(id), "id", id);
+        queryWrapper.eq(ObjectUtils.isNotEmpty(phone), "phone", housemanagerQueryRequest.getPhone());
+        queryWrapper.eq(ObjectUtils.isNotEmpty(unionId), "unionId", housemanagerQueryRequest.getUnionId());
         // 排序规则
         queryWrapper.orderBy(SqlUtils.validSortField(sortField),
                 sortOrder.equals(CommonConstant.SORT_ORDER_ASC),
