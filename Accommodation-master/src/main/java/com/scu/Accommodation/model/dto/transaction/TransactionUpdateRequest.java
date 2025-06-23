@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Data
 public class TransactionUpdateRequest implements Serializable {
 
-    private long id;
+    private Long id;
     /**
      *
      */
@@ -47,7 +47,7 @@ public class TransactionUpdateRequest implements Serializable {
      */
     private String reason;
 
-    private long userId;
+    private Long userId;
 
     private static final long serialVersionUID = 1L;
 }

@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 public class TransactionAddRequest implements Serializable {
 
-    private long id;
+    private Long id;
 
     /**
      *
@@ -40,7 +40,7 @@ public class TransactionAddRequest implements Serializable {
     private Integer type;
 
 
-    private long userId;
+    private Long userId;
 
 
     private static final long serialVersionUID = 1L;

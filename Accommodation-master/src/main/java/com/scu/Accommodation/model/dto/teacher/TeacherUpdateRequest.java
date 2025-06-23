@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 public class TeacherUpdateRequest implements Serializable {
 
-    private long id;
+    private Long id;
     /**
      *
      */

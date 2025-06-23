@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * 查询业务请求
@@ -15,7 +14,7 @@ import java.util.List;
 @Data
 public class TransactionQueryRequest extends PageRequest implements Serializable {
 
-    private long id;
+    private Long id;
     /**
      *
      */
@@ -46,7 +45,9 @@ public class TransactionQueryRequest extends PageRequest implements Serializable
      */
     private Integer status;
 
-    private long userId;
+
+    private Long userId;
+
 
     private static final long serialVersionUID = 1L;
 }

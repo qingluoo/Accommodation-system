@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 public class RepairerEditRequest implements Serializable {
 
-    private long id;
+    private Long id;
     /**
      *
      */
@@ -31,7 +31,7 @@ public class RepairerEditRequest implements Serializable {
     /**
      * 标签列表
      */
-    private long userId;
+    private Long userId;
 
     private static final long serialVersionUID = 1L;
 }

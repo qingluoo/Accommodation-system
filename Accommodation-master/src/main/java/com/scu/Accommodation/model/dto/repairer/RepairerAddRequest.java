@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 public class RepairerAddRequest implements Serializable {
 
-    private long id;
+    private Long id;
     /**
      *
      */
@@ -29,7 +29,7 @@ public class RepairerAddRequest implements Serializable {
      */
     private String phone;
 
-    private long userId;
+    private Long userId;
 
     private static final long serialVersionUID = 1L;
 }
