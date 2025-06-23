@@ -76,7 +76,6 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
             return queryWrapper;
         }
         // todo 从对象中取值
-        Long id = teacherQueryRequest.getId();
         String unionId = teacherQueryRequest.getUnionId();
         String teaName = teacherQueryRequest.getTeaName();
         Integer sex = teacherQueryRequest.getSex();
@@ -86,19 +85,16 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
         String phone = teacherQueryRequest.getPhone();
         String sortField = teacherQueryRequest.getSortField();
         String sortOrder = teacherQueryRequest.getSortOrder();
-        Long userId = teacherQueryRequest.getUserId();
         // todo 补充需要的查询条件
         // 模糊查询
         queryWrapper.like(StringUtils.isNotBlank(roomId), "roomId", roomId);
         queryWrapper.like(StringUtils.isNotBlank(teaName), "teaName", teaName);
         queryWrapper.like(StringUtils.isNotBlank(college), "college", college);
         // 精确查询
-        queryWrapper.eq(ObjectUtils.isNotEmpty(id), "id", id);
         queryWrapper.eq(StringUtils.isNotBlank(unionId), "unionId", unionId);
         queryWrapper.eq(StringUtils.isNotBlank(phone), "phone", phone);
         queryWrapper.eq(StringUtils.isNotBlank(title), "title", title);
         queryWrapper.eq(ObjectUtils.isNotEmpty(sex), "sex", sex);
-        queryWrapper.eq(ObjectUtils.isNotEmpty(userId), "userId", userId);
         // 排序规则
         queryWrapper.orderBy(SqlUtils.validSortField(sortField),
                 sortOrder.equals(CommonConstant.SORT_ORDER_ASC),

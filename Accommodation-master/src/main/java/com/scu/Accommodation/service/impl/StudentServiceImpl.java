@@ -78,7 +78,6 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
             return queryWrapper;
         }
         // todo 从对象中取值
-        Long id = studentQueryRequest.getId();
         String unionId = studentQueryRequest.getUnionId();
         Integer grade = studentQueryRequest.getGrade();
         String stuName = studentQueryRequest.getStuName();
@@ -87,21 +86,18 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         String major = studentQueryRequest.getMajor();
         String classNum = studentQueryRequest.getClassNum();
         String roomId = studentQueryRequest.getRoomId();
-        Long userId = studentQueryRequest.getUserId();
         String sortField = studentQueryRequest.getSortField();
         String sortOrder = studentQueryRequest.getSortOrder();
         // 模糊查询
         queryWrapper.like(ObjectUtils.isNotEmpty(stuName), "stuName", stuName);
         queryWrapper.like(ObjectUtils.isNotEmpty(roomId), "roomId", roomId);
         // 精确查询
-        queryWrapper.eq(ObjectUtils.isNotEmpty(id), "id", id);
         queryWrapper.eq(ObjectUtils.isNotEmpty(unionId), "unionId", unionId);
         queryWrapper.eq(ObjectUtils.isNotEmpty(college), "college", college);
         queryWrapper.eq(ObjectUtils.isNotEmpty(major), "major", major);
         queryWrapper.eq(ObjectUtils.isNotEmpty(grade), "grade", grade);
         queryWrapper.eq(ObjectUtils.isNotEmpty(classNum), "classNum", classNum);
         queryWrapper.eq(ObjectUtils.isNotEmpty(sex), "sex", sex);
-        queryWrapper.eq(ObjectUtils.isNotEmpty(userId), "userId", userId);
         // 排序规则
         queryWrapper.orderBy(SqlUtils.validSortField(sortField),
                 sortOrder.equals(CommonConstant.SORT_ORDER_ASC),

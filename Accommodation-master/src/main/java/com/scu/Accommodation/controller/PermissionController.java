@@ -95,7 +95,6 @@ public class PermissionController {
      * @return
      */
     @PostMapping("/update")
-    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
     public BaseResponse<Boolean> updatePermission(@RequestBody PermissionUpdateRequest permissionUpdateRequest) {
         if (permissionUpdateRequest == null || permissionUpdateRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
@@ -138,7 +137,6 @@ public class PermissionController {
      * @return
      */
     @PostMapping("/list/page")
-    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
     public BaseResponse<Page<Permission>> listPermissionByPage(@RequestBody PermissionQueryRequest permissionQueryRequest) {
         long current = permissionQueryRequest.getCurrent();
         long size = permissionQueryRequest.getPageSize();

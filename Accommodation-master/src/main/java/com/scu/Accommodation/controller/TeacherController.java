@@ -138,7 +138,6 @@ public class TeacherController {
      * @return
      */
     @PostMapping("/list/page")
-    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
     public BaseResponse<Page<Teacher>> listTeacherByPage(@RequestBody TeacherQueryRequest teacherQueryRequest) {
         long current = teacherQueryRequest.getCurrent();
         long size = teacherQueryRequest.getPageSize();

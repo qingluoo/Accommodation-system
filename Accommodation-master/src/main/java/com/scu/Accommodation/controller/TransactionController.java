@@ -95,7 +95,6 @@ public class TransactionController {
      * @return
      */
     @PostMapping("/update")
-    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
     public BaseResponse<Boolean> updateTransaction(@RequestBody TransactionUpdateRequest transactionUpdateRequest) {
         if (transactionUpdateRequest == null || transactionUpdateRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
@@ -138,7 +137,6 @@ public class TransactionController {
      * @return
      */
     @PostMapping("/list/page")
-    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
     public BaseResponse<Page<Transaction>> listTransactionByPage(@RequestBody TransactionQueryRequest transactionQueryRequest) {
         long current = transactionQueryRequest.getCurrent();
         long size = transactionQueryRequest.getPageSize();

@@ -72,7 +72,6 @@ public class TransactionServiceImpl extends ServiceImpl<TransactionMapper, Trans
             return queryWrapper;
         }
         // todo 从对象中取值
-        Long id = transactionQueryRequest.getId();
         String unionId = transactionQueryRequest.getUnionId();
         String name = transactionQueryRequest.getName();
         Integer roleId = transactionQueryRequest.getRoleId();
@@ -83,19 +82,15 @@ public class TransactionServiceImpl extends ServiceImpl<TransactionMapper, Trans
         // 排序规则
         String sortField = transactionQueryRequest.getSortField();
         String sortOrder = transactionQueryRequest.getSortOrder();
-
-        Long userId = transactionQueryRequest.getUserId();
         // todo 补充需要的查询条件
         // 模糊查询
         queryWrapper.like(StringUtils.isNotBlank(name), "name", name);
         queryWrapper.like(StringUtils.isNotBlank(description), "description", description);
         // 精确查询
-        queryWrapper.eq(ObjectUtils.isNotEmpty(id), "id", id);
         queryWrapper.eq(StringUtils.isNotBlank(unionId), "unionId", unionId);
         queryWrapper.eq(ObjectUtils.isNotEmpty(roleId), "roleId", roleId);
         queryWrapper.eq(ObjectUtils.isNotEmpty(type), "type", type);
         queryWrapper.eq(ObjectUtils.isNotEmpty(status), "status", status);
-        queryWrapper.eq(ObjectUtils.isNotEmpty(userId), "userId", userId);
         // 排序规则
         queryWrapper.orderBy(SqlUtils.validSortField(sortField),
                 sortOrder.equals(CommonConstant.SORT_ORDER_ASC),

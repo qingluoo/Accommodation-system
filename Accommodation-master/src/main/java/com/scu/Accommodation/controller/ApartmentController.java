@@ -97,7 +97,6 @@ public class ApartmentController {
      * @return
      */
     @PostMapping("/update")
-    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
     public BaseResponse<Boolean> updateApartment(@RequestBody ApartmentUpdateRequest apartmentUpdateRequest) {
         if (apartmentUpdateRequest == null || apartmentUpdateRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
@@ -140,7 +139,6 @@ public class ApartmentController {
      * @return
      */
     @PostMapping("/list/page")
-    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
     public BaseResponse<Page<Apartment>> listApartmentByPage(@RequestBody ApartmentQueryRequest apartmentQueryRequest) {
         long current = apartmentQueryRequest.getCurrent();
         long size = apartmentQueryRequest.getPageSize();

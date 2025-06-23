@@ -70,11 +70,9 @@ public class RepairerServiceImpl extends ServiceImpl<RepairerMapper, Repairer> i
             return queryWrapper;
         }
         // todo 从对象中取值
-        Long id = repairerQueryRequest.getId();
         String unionId = repairerQueryRequest.getUnionId();
         String name = repairerQueryRequest.getName();
         String phone = repairerQueryRequest.getPhone();
-        Long userId = repairerQueryRequest.getUserId();
         String sortField = repairerQueryRequest.getSortField();
         String sortOrder = repairerQueryRequest.getSortOrder();
         // todo 补充需要的查询条件
@@ -82,9 +80,6 @@ public class RepairerServiceImpl extends ServiceImpl<RepairerMapper, Repairer> i
         queryWrapper.like(ObjectUtils.isNotEmpty(unionId), "unionId", unionId);
         queryWrapper.like(ObjectUtils.isNotEmpty(name), "name", name);
         queryWrapper.like(ObjectUtils.isNotEmpty(phone), "phone", phone);
-        // 精确查询
-        queryWrapper.eq(ObjectUtils.isNotEmpty(id), "id", id);
-        queryWrapper.eq(ObjectUtils.isNotEmpty(userId), "userId", userId);
         // 排序规则
         queryWrapper.orderBy(SqlUtils.validSortField(sortField),
                 sortOrder.equals(CommonConstant.SORT_ORDER_ASC),

@@ -75,7 +75,6 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
             return queryWrapper;
         }
         // todo 从对象中取值
-        Long id = permissionQueryRequest.getId();
         Integer roleId = permissionQueryRequest.getRoleId();
         String name = permissionQueryRequest.getName();
         String code = permissionQueryRequest.getCode();
@@ -90,7 +89,6 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
         queryWrapper.like(StringUtils.isNotBlank(code), "code", code);
         queryWrapper.like(StringUtils.isNotBlank(description), "description", description);
         // 精确查询
-        queryWrapper.ne(ObjectUtils.isNotEmpty(id), "id", id);
         queryWrapper.eq(ObjectUtils.isNotEmpty(roleId), "roleId", roleId);
         // 排序规则
         queryWrapper.orderBy(SqlUtils.validSortField(sortField),

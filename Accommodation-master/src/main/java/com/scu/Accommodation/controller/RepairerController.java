@@ -95,7 +95,6 @@ public class RepairerController {
      * @return
      */
     @PostMapping("/update")
-    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
     public BaseResponse<Boolean> updateRepairer(@RequestBody RepairerUpdateRequest repairerUpdateRequest) {
         if (repairerUpdateRequest == null || repairerUpdateRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
@@ -138,7 +137,6 @@ public class RepairerController {
      * @return
      */
     @PostMapping("/list/page")
-    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
     public BaseResponse<Page<Repairer>> listRepairerByPage(@RequestBody RepairerQueryRequest repairerQueryRequest) {
         long current = repairerQueryRequest.getCurrent();
         long size = repairerQueryRequest.getPageSize();

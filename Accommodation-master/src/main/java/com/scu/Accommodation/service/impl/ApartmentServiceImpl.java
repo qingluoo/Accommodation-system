@@ -68,7 +68,6 @@ public class ApartmentServiceImpl extends ServiceImpl<ApartmentMapper, Apartment
             return queryWrapper;
         }
         // 从请求对象中取值
-        Long id = apartmentQueryRequest.getId();
         String park = apartmentQueryRequest.getPark();
         String building = apartmentQueryRequest.getBuilding();
         String room = apartmentQueryRequest.getRoom();
@@ -88,7 +87,6 @@ public class ApartmentServiceImpl extends ServiceImpl<ApartmentMapper, Apartment
         queryWrapper.like(ObjectUtils.isNotEmpty(liveNum), "liveNum", liveNum);
 
         // 精确查询
-        queryWrapper.ne(ObjectUtils.isNotEmpty(id), "id", id);
         queryWrapper.eq(ObjectUtils.isNotEmpty(bedNum), "bedNum", bedNum);
         queryWrapper.eq(ObjectUtils.isNotEmpty(liveNum), "liveNum", liveNum);
         queryWrapper.eq(ObjectUtils.isNotEmpty(isFull), "isFull", isFull);

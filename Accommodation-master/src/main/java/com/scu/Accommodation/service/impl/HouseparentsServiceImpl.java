@@ -74,7 +74,6 @@ public class HouseparentsServiceImpl extends ServiceImpl<HouseparentsMapper, Hou
             return queryWrapper;
         }
         // todo 从对象中取值
-        Long id = houseparentsQueryRequest.getId();
         String unionId = houseparentsQueryRequest.getUnionId();
         String name = houseparentsQueryRequest.getName();
         String phone = houseparentsQueryRequest.getPhone();
@@ -88,7 +87,6 @@ public class HouseparentsServiceImpl extends ServiceImpl<HouseparentsMapper, Hou
         queryWrapper.like(StringUtils.isNotBlank(name), "name", name);
         queryWrapper.like(StringUtils.isNotBlank(building), "building", building);
         // 精确查询
-        queryWrapper.ne(ObjectUtils.isNotEmpty(id), "id", id);
         queryWrapper.eq(ObjectUtils.isNotEmpty(userId), "userId", userId);
         queryWrapper.eq(ObjectUtils.isNotEmpty(unionId), "unionId", unionId);
         queryWrapper.eq(ObjectUtils.isNotEmpty(phone), "phone", phone);

@@ -70,7 +70,6 @@ public class HouseManagerServiceImpl extends ServiceImpl<HousemanagerMapper, Hou
             return queryWrapper;
         }
         // todo 从对象中取值
-        Long id = housemanagerQueryRequest.getId();
         String unionId = housemanagerQueryRequest.getUnionId();
         String name = housemanagerQueryRequest.getName();
         String phone = housemanagerQueryRequest.getPhone();
@@ -82,7 +81,6 @@ public class HouseManagerServiceImpl extends ServiceImpl<HousemanagerMapper, Hou
         queryWrapper.like(StringUtils.isNotBlank(phone), "phone", phone);
 
         // 精确查询
-        queryWrapper.ne(ObjectUtils.isNotEmpty(id), "id", id);
         queryWrapper.eq(ObjectUtils.isNotEmpty(phone), "phone", housemanagerQueryRequest.getPhone());
         queryWrapper.eq(ObjectUtils.isNotEmpty(unionId), "unionId", housemanagerQueryRequest.getUnionId());
         // 排序规则

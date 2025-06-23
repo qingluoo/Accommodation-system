@@ -95,7 +95,6 @@ public class HouseManagerController {
      * @return
      */
     @PostMapping("/update")
-    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
     public BaseResponse<Boolean> updateHouseManager(@RequestBody HouseManagerUpdateRequest housemanagerUpdateRequest) {
         if (housemanagerUpdateRequest == null || housemanagerUpdateRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
@@ -138,7 +137,6 @@ public class HouseManagerController {
      * @return
      */
     @PostMapping("/list/page")
-    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
     public BaseResponse<Page<Housemanager>> listHouseManagerByPage(@RequestBody HouseManagerQueryRequest housemanagerQueryRequest) {
         long current = housemanagerQueryRequest.getCurrent();
         long size = housemanagerQueryRequest.getPageSize();
