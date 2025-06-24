@@ -52,7 +52,6 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         String college = student.getCollege();
         String major = student.getMajor();
         String classNum = student.getClassNum();
-        String roomId = student.getRoomId();
         // 创建数据时，参数不能为空
         if (add) {
             // todo 补充校验规则
@@ -62,6 +61,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
             ThrowUtils.throwIf(sex == null || sex < 0 || sex > 2, ErrorCode.PARAMS_ERROR, "性别错误");
             ThrowUtils.throwIf(StringUtils.isBlank(college), ErrorCode.PARAMS_ERROR, "学院不能为空");
             ThrowUtils.throwIf(StringUtils.isBlank(major), ErrorCode.PARAMS_ERROR, "专业不能为空");
+            ThrowUtils.throwIf(StringUtils.isBlank(classNum), ErrorCode.PARAMS_ERROR, "班级不能为空");
         }
     }
 
