@@ -1,13 +1,17 @@
 package com.scu.Accommodation.aop;
 
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.scu.Accommodation.annotation.AuthCheck;
 import com.scu.Accommodation.common.ErrorCode;
 import com.scu.Accommodation.exception.BusinessException;
 import com.scu.Accommodation.mapper.PermissionMapper;
+import com.scu.Accommodation.mapper.RoleMapper;
 import com.scu.Accommodation.model.entity.Permission;
+import com.scu.Accommodation.model.entity.Role;
 import com.scu.Accommodation.model.entity.User;
 import com.scu.Accommodation.model.enums.UserRoleEnum;
+import com.scu.Accommodation.service.RoleService;
 import com.scu.Accommodation.service.UserService;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -34,7 +38,7 @@ public class AuthInterceptor {
     private UserService userService;
 
     @Resource
-    private PermissionMapper permissionMapper;
+    private RoleService roleService;
 
     /**
      * 执行拦截
@@ -59,7 +63,7 @@ public class AuthInterceptor {
             return joinPoint.proceed();
         }
         checkRole(userRole, mustRole);
-        checkPermission(userRole, mustCode);
+        checkCode(userRole, mustCode);
         // 通过权限校验，放行
         return joinPoint.proceed();
     }
@@ -76,17 +80,21 @@ public class AuthInterceptor {
     /**
      * 校验用户权限码
      */
-    private void checkPermission(String userRole, String requiredPermission) {
+    private void checkCode(String userRole, String requiredCode) {
         // 查询用户拥有的所有权限码
-        QueryWrapper<Permission> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("roleName", userRole)  // 字段名需与数据库一致
-                .select("code");  // 只查询 code 列
-        List<Permission> permissions = permissionMapper.selectList(queryWrapper);
-        List<String> userPermissions = permissions.stream().map(Permission::getCode).collect(Collectors.toList());
-
-        // 检查是否包含所需权限
-        if (!userPermissions.contains(requiredPermission)) {
-            throw new BusinessException(ErrorCode.NO_AUTH_ERROR, "无操作权限：" + requiredPermission);
+        QueryWrapper<Role> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("name", userRole)  // 字段名需与数据库一致
+                .select("codelist");  // 只查询 code 列
+        Role role = roleService.getOne(queryWrapper);
+        // 解析 codelist 字符串为 JSON 数组
+        if (role != null && role.getCodelist() != null) {
+            List<String> userPermissions = JSONUtil.toList(role.getCodelist(), String.class);
+            // 检查是否包含所需权限
+            if (!userPermissions.contains(requiredCode)) {
+                throw new BusinessException(ErrorCode.NO_AUTH_ERROR, "无操作权限：" + requiredCode);
+            }
+        } else {
+            throw new BusinessException(ErrorCode.NO_AUTH_ERROR, "角色权限不足");
         }
     }
 }
