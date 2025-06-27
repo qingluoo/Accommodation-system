@@ -6,8 +6,6 @@
 
     <resultMap id="BaseResultMap" type="com.scu.Accommodation.model.entity.Permission">
             <id property="id" column="id" />
-            <result property="roleId" column="roleId" />
-            <result property="roleName" column="roleName" />
             <result property="name" column="name" />
             <result property="code" column="code" />
             <result property="description" column="description" />
@@ -15,7 +13,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,roleId,roleName,name,code,description,
+        id,name,code,description,
         isDelete
     </sql>
 </mapper>
