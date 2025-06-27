@@ -20,16 +20,6 @@ public class PermissionEditRequest implements Serializable {
     /**
      * 
      */
-    private Integer roleId;
-
-    /**
-     * 
-     */
-    private String roleName;
-
-    /**
-     * 
-     */
     private String name;
 
     /**

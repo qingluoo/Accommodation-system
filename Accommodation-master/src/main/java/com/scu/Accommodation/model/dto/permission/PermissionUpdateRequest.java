@@ -17,16 +17,6 @@ public class PermissionUpdateRequest implements Serializable {
     /**
      * 
      */
-    private Integer roleId;
-
-    /**
-     * 
-     */
-    private String roleName;
-
-    /**
-     * 
-     */
     private String name;
 
     /**

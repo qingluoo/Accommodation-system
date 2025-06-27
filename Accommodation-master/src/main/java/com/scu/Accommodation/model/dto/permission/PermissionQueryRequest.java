@@ -19,16 +19,6 @@ public class PermissionQueryRequest extends PageRequest implements Serializable 
     /**
      * 
      */
-    private Integer roleId;
-
-    /**
-     * 
-     */
-    private String roleName;
-
-    /**
-     * 
-     */
     private String name;
 
     /**

@@ -22,16 +22,6 @@ public class Permission {
     /**
      * 
      */
-    private Integer roleId;
-
-    /**
-     * 
-     */
-    private String roleName;
-
-    /**
-     * 
-     */
     private String name;
 
     /**

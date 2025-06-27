@@ -45,16 +45,12 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     public void validPermission(Permission permission, boolean add) {
         ThrowUtils.throwIf(permission == null, ErrorCode.PARAMS_ERROR);
         // todo 从对象中取值
-        Integer roleId = permission.getRoleId();
-        String roleName = permission.getRoleName();
         String name = permission.getName();
         String code = permission.getCode();
         String description = permission.getDescription();
         // 创建数据时，参数不能为空
         if (add) {
             // todo 补充校验规则
-            ThrowUtils.throwIf(roleId == null, ErrorCode.PARAMS_ERROR);
-            ThrowUtils.throwIf(StringUtils.isBlank(roleName), ErrorCode.PARAMS_ERROR);
             ThrowUtils.throwIf(StringUtils.isBlank(name), ErrorCode.PARAMS_ERROR);
             ThrowUtils.throwIf(StringUtils.isBlank(code), ErrorCode.PARAMS_ERROR);
             ThrowUtils.throwIf(StringUtils.isBlank(description), ErrorCode.PARAMS_ERROR);
@@ -75,7 +71,6 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
             return queryWrapper;
         }
         // todo 从对象中取值
-        Integer roleId = permissionQueryRequest.getRoleId();
         String name = permissionQueryRequest.getName();
         String code = permissionQueryRequest.getCode();
         String description = permissionQueryRequest.getDescription();
@@ -89,7 +84,7 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
         queryWrapper.like(StringUtils.isNotBlank(code), "code", code);
         queryWrapper.like(StringUtils.isNotBlank(description), "description", description);
         // 精确查询
-        queryWrapper.eq(ObjectUtils.isNotEmpty(roleId), "roleId", roleId);
+
         // 排序规则
         queryWrapper.orderBy(SqlUtils.validSortField(sortField),
                 sortOrder.equals(CommonConstant.SORT_ORDER_ASC),

@@ -16,17 +16,7 @@ import java.util.List;
 @Data
 public class PermissionVO implements Serializable {
 
-      private Long id;
-
-    /**
-     * 
-     */
-    private Integer roleId;
-
-    /**
-     * 
-     */
-    private String roleName;
+    private Long id;
 
     /**
      * 
