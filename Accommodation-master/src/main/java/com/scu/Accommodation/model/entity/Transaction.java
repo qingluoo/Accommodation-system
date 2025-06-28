@@ -30,6 +30,15 @@ public class Transaction {
      */
     private String name;
 
+
+    private Integer grade;
+
+
+    private String college;
+
+
+    private String major;
+
     /**
      * 
      */

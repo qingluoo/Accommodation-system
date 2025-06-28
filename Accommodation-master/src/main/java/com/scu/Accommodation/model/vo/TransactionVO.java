@@ -28,6 +28,14 @@ public class TransactionVO implements Serializable {
      */
     private String name;
 
+    private Integer grade;
+
+
+    private String college;
+
+
+    private String major;
+
     /**
      *
      */

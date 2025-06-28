@@ -74,6 +74,9 @@ public class TransactionServiceImpl extends ServiceImpl<TransactionMapper, Trans
         // todo 从对象中取值
         String unionId = transactionQueryRequest.getUnionId();
         String name = transactionQueryRequest.getName();
+        Integer grade = transactionQueryRequest.getGrade();
+        String college = transactionQueryRequest.getCollege();
+        String major = transactionQueryRequest.getMajor();
         Integer roleId = transactionQueryRequest.getRoleId();
         String description = transactionQueryRequest.getDescription();
         Integer type = transactionQueryRequest.getType();
@@ -85,9 +88,12 @@ public class TransactionServiceImpl extends ServiceImpl<TransactionMapper, Trans
         // todo 补充需要的查询条件
         // 模糊查询
         queryWrapper.like(StringUtils.isNotBlank(name), "name", name);
+        queryWrapper.like(StringUtils.isNotBlank(college), "college", college);
         queryWrapper.like(StringUtils.isNotBlank(description), "description", description);
         // 精确查询
         queryWrapper.eq(StringUtils.isNotBlank(unionId), "unionId", unionId);
+        queryWrapper.eq(StringUtils.isNotBlank(major), "major", major);
+        queryWrapper.eq(ObjectUtils.isNotEmpty(grade), "grade", grade);
         queryWrapper.eq(ObjectUtils.isNotEmpty(roleId), "roleId", roleId);
         queryWrapper.eq(ObjectUtils.isNotEmpty(type), "type", type);
         queryWrapper.eq(ObjectUtils.isNotEmpty(status), "status", status);

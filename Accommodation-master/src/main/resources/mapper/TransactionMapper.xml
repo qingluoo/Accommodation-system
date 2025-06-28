@@ -8,6 +8,9 @@
             <id property="id" column="id" />
             <result property="unionId" column="unionId" />
             <result property="name" column="name" />
+            <result property="grade" column="grade" />
+            <result property="college" column="college" />
+            <result property="major" column="major" />
             <result property="roleId" column="roleId" />
             <result property="description" column="description" />
             <result property="type" column="type" />
@@ -19,7 +22,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,unionId,name,roleId,description,type,status,reason,
+        id,unionId,name,grade,college,major,roleId,description,type,status,reason,
         createTime,updateTime,isDelete
     </sql>
 </mapper>
