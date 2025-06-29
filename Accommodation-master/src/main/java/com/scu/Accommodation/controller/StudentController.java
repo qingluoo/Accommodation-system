@@ -1,5 +1,7 @@
 package com.scu.Accommodation.controller;
 
+import cn.hutool.poi.excel.ExcelReader;
+import cn.hutool.poi.excel.ExcelUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.scu.Accommodation.annotation.AuthCheck;
 import com.scu.Accommodation.common.BaseResponse;
@@ -21,9 +23,12 @@ import com.scu.Accommodation.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.io.InputStream;
+import java.util.List;
 
 /**
  * 学生接口
@@ -221,4 +226,51 @@ public class StudentController {
     }
 
     // endregion
+
+    // 批量导入
+    @PostMapping("/import")
+    public BaseResponse<Boolean> importData(MultipartFile file) throws Exception {
+        //拿到输入流 构建reader
+        InputStream inputStream = file.getInputStream();
+        ExcelReader reader = ExcelUtil.getReader(inputStream);
+        //通过Reader读取excel里面的数据
+        reader.addHeaderAlias("学号", "unionId");
+        reader.addHeaderAlias("年级", "grade");
+        reader.addHeaderAlias("姓名", "stuName");
+        reader.addHeaderAlias("性别", "sex");
+        reader.addHeaderAlias("学院", "college");
+        reader.addHeaderAlias("专业", "major");
+        reader.addHeaderAlias("班级", "classNum");
+        List<Student> studentList=reader.readAll(Student.class);
+        //将数据写入数据库
+        for(Student student:studentList){
+            studentService.save(student);
+        }
+        return ResultUtils.success(true);
+    }
+
+    /**
+     * 批量更新学生寝室信息
+     */
+    @PostMapping("/update/park-building")
+    public BaseResponse<Boolean> updateRoom(@RequestBody List<StudentEditRequest> studentEditRequests) {
+        if (studentEditRequests == null || studentEditRequests.size() <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        for (StudentEditRequest studentEditRequest : studentEditRequests) {
+            // todo 在此处将实体类和 DTO 进行转换
+            Student student = new Student();
+            BeanUtils.copyProperties(studentEditRequest, student);
+            // 数据校验
+            studentService.validStudent(student, false);
+            // 判断是否存在
+            long id = studentEditRequest.getId();
+            Student oldStudent = studentService.getById(id);
+            ThrowUtils.throwIf(oldStudent == null, ErrorCode.NOT_FOUND_ERROR);
+            // 操作数据库
+            boolean result = studentService.updateById(student);
+            ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
+        }
+        return ResultUtils.success(true);
+    }
 }

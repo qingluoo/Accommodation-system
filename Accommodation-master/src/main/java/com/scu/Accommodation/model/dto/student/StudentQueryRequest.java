@@ -51,6 +51,12 @@ public class StudentQueryRequest extends PageRequest implements Serializable {
      */
     private String classNum;
 
+    private String park;
+
+    private String building;
+
+    private String room;
+
     /**
      *
      */

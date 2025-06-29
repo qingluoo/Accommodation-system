@@ -46,6 +46,12 @@ public class TeacherVO implements Serializable {
      */
     private String title;
 
+    private String park;
+
+    private String building;
+
+    private String room;
+
     /**
      *
      */

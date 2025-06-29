@@ -1,5 +1,7 @@
 package com.scu.Accommodation.controller;
 
+import cn.hutool.poi.excel.ExcelReader;
+import cn.hutool.poi.excel.ExcelUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.scu.Accommodation.annotation.AuthCheck;
 import com.scu.Accommodation.common.BaseResponse;
@@ -13,6 +15,7 @@ import com.scu.Accommodation.model.dto.teacher.TeacherAddRequest;
 import com.scu.Accommodation.model.dto.teacher.TeacherEditRequest;
 import com.scu.Accommodation.model.dto.teacher.TeacherQueryRequest;
 import com.scu.Accommodation.model.dto.teacher.TeacherUpdateRequest;
+import com.scu.Accommodation.model.entity.Student;
 import com.scu.Accommodation.model.entity.Teacher;
 import com.scu.Accommodation.model.entity.User;
 import com.scu.Accommodation.model.vo.TeacherVO;
@@ -21,9 +24,12 @@ import com.scu.Accommodation.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.io.InputStream;
+import java.util.List;
 
 /**
  * 教师接口
@@ -222,4 +228,26 @@ public class TeacherController {
     }
 
     // endregion
+
+    // 批量导入
+    @PostMapping("/import")
+    public BaseResponse<Boolean> importData(MultipartFile file) throws Exception {
+        //拿到输入流 构建reader
+        InputStream inputStream = file.getInputStream();
+        ExcelReader reader = ExcelUtil.getReader(inputStream);
+        //通过Reader读取excel里面的数据
+        reader.addHeaderAlias("工号", "unionId");
+        reader.addHeaderAlias("姓名", "teaName");
+        reader.addHeaderAlias("性别", "sex");
+        reader.addHeaderAlias("学院", "college");
+        reader.addHeaderAlias("职称", "title");
+        reader.addHeaderAlias("电话", "phone");
+        List<Teacher> teacherList = reader.readAll(Teacher.class);
+        //将数据写入数据库
+        for (Teacher teacher : teacherList) {
+            teacherService.save(teacher);
+        }
+        return ResultUtils.success(true);
+    }
+
 }

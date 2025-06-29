@@ -41,6 +41,12 @@ public class TeacherQueryRequest extends PageRequest implements Serializable {
      */
     private String title;
 
+    private String park;
+
+    private String building;
+
+    private String room;
+
     /**
      *
      */

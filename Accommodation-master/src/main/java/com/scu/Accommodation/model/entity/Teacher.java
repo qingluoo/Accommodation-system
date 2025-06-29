@@ -44,10 +44,19 @@ public class Teacher {
      */
     private String title;
 
+    private String park;
+
+    private String building;
+
+    private String room;
+
     /**
      * 
      */
     private String roomId;
+
+
+    private Long apartment_id;
 
     /**
      * 

@@ -54,10 +54,18 @@ public class Student {
      */
     private String classNum;
 
+    private String park;
+
+    private String building;
+
+    private String room;
+
     /**
      * 
      */
     private String roomId;
+
+    private Long apartment_id;
 
     /**
      * 

@@ -13,12 +13,16 @@
             <result property="college" column="college" />
             <result property="major" column="major" />
             <result property="classNum" column="classNum" />
+            <result property="park" column="park" />
+            <result property="building" column="building" />
+            <result property="room" column="room" />
             <result property="roomId" column="roomId" />
+            <result property="apartment_id" column="apartment_id" />
             <result property="isDelete" column="isDelete" />
     </resultMap>
 
     <sql id="Base_Column_List">
         id,unionId,grade,stuName,sex,college,
-        major,classNum,roomId,isDelete
+        major,classNum,park,building,room,roomId,isDelete
     </sql>
 </mapper>

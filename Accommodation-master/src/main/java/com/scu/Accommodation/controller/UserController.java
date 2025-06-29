@@ -1,5 +1,7 @@
 package com.scu.Accommodation.controller;
 
+import cn.hutool.poi.excel.ExcelReader;
+import cn.hutool.poi.excel.ExcelUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.scu.Accommodation.annotation.AuthCheck;
 import com.scu.Accommodation.common.BaseResponse;
@@ -20,6 +22,7 @@ import com.scu.Accommodation.model.vo.LoginUserVO;
 import com.scu.Accommodation.model.vo.UserVO;
 import com.scu.Accommodation.service.UserService;
 
+import java.io.InputStream;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -33,6 +36,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 用户接口
@@ -273,6 +277,27 @@ public class UserController {
         user.setId(loginUser.getId());
         boolean result = userService.updateById(user);
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
+        return ResultUtils.success(true);
+    }
+
+
+    // 批量导入
+    @PostMapping("/import")
+    public BaseResponse<Boolean> importData(MultipartFile file) throws Exception {
+        //拿到输入流 构建reader
+        InputStream inputStream = file.getInputStream();
+        ExcelReader reader = ExcelUtil.getReader(inputStream);
+        //通过Reader读取excel里面的数据
+        reader.addHeaderAlias("账号", "useAccount");
+        reader.addHeaderAlias("密码", "userPassword");
+        reader.addHeaderAlias("学号/工号", "unionId");
+        reader.addHeaderAlias("用户名", "userName");
+        reader.addHeaderAlias("用户角色","userRole");
+        List<User> userList=reader.readAll(User.class);
+        //将数据写入数据库
+        for(User user:userList){
+            userService.save(user);
+        }
         return ResultUtils.success(true);
     }
 }

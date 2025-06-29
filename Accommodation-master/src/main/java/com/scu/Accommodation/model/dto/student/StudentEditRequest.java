@@ -43,6 +43,12 @@ public class StudentEditRequest implements Serializable {
      */
     private String classNum;
 
+    private String park;
+
+    private String building;
+
+    private String room;
+
     /**
      *
      */
