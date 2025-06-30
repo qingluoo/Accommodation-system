@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
+
+import java.math.BigDecimal;
 import java.util.Date;
 import lombok.Data;
 
@@ -48,6 +50,10 @@ public class Transaction {
      * 
      */
     private String description;
+
+    private String filename;
+
+    private Byte[] filebyte;
 
     /**
      * 

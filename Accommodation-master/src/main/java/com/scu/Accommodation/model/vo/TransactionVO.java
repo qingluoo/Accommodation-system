@@ -4,6 +4,7 @@ import cn.hutool.json.JSONUtil;
 import com.scu.Accommodation.model.entity.Transaction;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -45,6 +46,9 @@ public class TransactionVO implements Serializable {
      *
      */
     private String description;
+
+
+    private String filename;
 
     /**
      *

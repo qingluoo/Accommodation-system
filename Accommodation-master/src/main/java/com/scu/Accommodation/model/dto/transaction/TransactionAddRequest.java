@@ -1,6 +1,7 @@
 package com.scu.Accommodation.model.dto.transaction;
 
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
 import java.util.List;
@@ -42,6 +43,9 @@ public class TransactionAddRequest implements Serializable {
      *
      */
     private String description;
+
+
+    private MultipartFile file;
 
     /**
      *
