@@ -53,7 +53,7 @@ public class Transaction {
 
     private String filename;
 
-    private Byte[] filebyte;
+    private byte[] filebyte;
 
     /**
      * 

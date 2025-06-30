@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 /**
  * 业务接口
@@ -50,11 +51,21 @@ public class TransactionController {
      * @return
      */
     @PostMapping("/add")
-    public BaseResponse<Long> addTransaction(@RequestBody TransactionAddRequest transactionAddRequest, HttpServletRequest request) {
+    public BaseResponse<Long> addTransaction(@ModelAttribute TransactionAddRequest transactionAddRequest, HttpServletRequest request) {
         ThrowUtils.throwIf(transactionAddRequest == null, ErrorCode.PARAMS_ERROR);
         // todo 在此处将实体类和 DTO 进行转换
         Transaction transaction = new Transaction();
         BeanUtils.copyProperties(transactionAddRequest, transaction);
+        transaction.setFilename(transactionAddRequest.getFile().getOriginalFilename());
+        try {
+            byte[] bytes = transactionAddRequest.getFile().getBytes();
+            // 现在你可以使用bytes数组了，写入数据库
+            transaction.setFilebyte(bytes);
+        } catch (IOException e) {
+            // 在这里可以记录日志或进行其他异常处理
+            ThrowUtils.throwIf(false, ErrorCode.SYSTEM_ERROR, e.getMessage());
+        }
+
         // 数据校验
         transactionService.validTransaction(transaction, true);
         // 写入数据库

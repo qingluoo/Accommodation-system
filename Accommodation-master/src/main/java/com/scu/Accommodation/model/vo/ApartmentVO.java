@@ -21,6 +21,8 @@ public class ApartmentVO implements Serializable {
      */
     private Long id;
 
+    private String park;
+
     /**
      * 楼栋
      */
