@@ -166,7 +166,7 @@ public class TeacherController {
         long current = teacherQueryRequest.getCurrent();
         long size = teacherQueryRequest.getPageSize();
         // 限制爬虫
-        ThrowUtils.throwIf(size > 20, ErrorCode.PARAMS_ERROR);
+        //ThrowUtils.throwIf(size > 20, ErrorCode.PARAMS_ERROR);
         // 查询数据库
         Page<Teacher> teacherPage = teacherService.page(new Page<>(current, size),
                 teacherService.getQueryWrapper(teacherQueryRequest));

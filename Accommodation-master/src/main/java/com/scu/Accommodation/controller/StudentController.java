@@ -164,7 +164,7 @@ public class StudentController {
         long current = studentQueryRequest.getCurrent();
         long size = studentQueryRequest.getPageSize();
         // 限制爬虫
-        ThrowUtils.throwIf(size > 20, ErrorCode.PARAMS_ERROR);
+        //ThrowUtils.throwIf(size > 20, ErrorCode.PARAMS_ERROR);
         // 查询数据库
         Page<Student> studentPage = studentService.page(new Page<>(current, size),
                 studentService.getQueryWrapper(studentQueryRequest));
