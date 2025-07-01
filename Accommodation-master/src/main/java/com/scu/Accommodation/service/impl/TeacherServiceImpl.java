@@ -81,6 +81,9 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
         Integer sex = teacherQueryRequest.getSex();
         String college = teacherQueryRequest.getCollege();
         String title = teacherQueryRequest.getTitle();
+        String park = teacherQueryRequest.getPark();
+        String building = teacherQueryRequest.getBuilding();
+        String room = teacherQueryRequest.getRoom();
         String roomId = teacherQueryRequest.getRoomId();
         String phone = teacherQueryRequest.getPhone();
         String sortField = teacherQueryRequest.getSortField();
@@ -95,6 +98,9 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
         queryWrapper.eq(StringUtils.isNotBlank(phone), "phone", phone);
         queryWrapper.eq(StringUtils.isNotBlank(title), "title", title);
         queryWrapper.eq(ObjectUtils.isNotEmpty(sex), "sex", sex);
+        queryWrapper.like(StringUtils.isNotBlank(park), "park", park);
+        queryWrapper.like(StringUtils.isNotBlank(building), "building", building);
+        queryWrapper.like(StringUtils.isNotBlank(room), "room", room);
         // 排序规则
         queryWrapper.orderBy(SqlUtils.validSortField(sortField),
                 sortOrder.equals(CommonConstant.SORT_ORDER_ASC),

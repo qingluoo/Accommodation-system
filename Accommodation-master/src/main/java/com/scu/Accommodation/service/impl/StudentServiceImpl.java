@@ -85,6 +85,9 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         String college = studentQueryRequest.getCollege();
         String major = studentQueryRequest.getMajor();
         String classNum = studentQueryRequest.getClassNum();
+        String park = studentQueryRequest.getPark();
+        String building = studentQueryRequest.getBuilding();
+        String room = studentQueryRequest.getRoom();
         String roomId = studentQueryRequest.getRoomId();
         String sortField = studentQueryRequest.getSortField();
         String sortOrder = studentQueryRequest.getSortOrder();
@@ -97,6 +100,9 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         queryWrapper.eq(ObjectUtils.isNotEmpty(major), "major", major);
         queryWrapper.eq(ObjectUtils.isNotEmpty(grade), "grade", grade);
         queryWrapper.eq(ObjectUtils.isNotEmpty(classNum), "classNum", classNum);
+        queryWrapper.eq(ObjectUtils.isNotEmpty(park), "park", park);
+        queryWrapper.eq(ObjectUtils.isNotEmpty(building), "building", building);
+        queryWrapper.eq(ObjectUtils.isNotEmpty(room), "room", room);
         queryWrapper.eq(ObjectUtils.isNotEmpty(sex), "sex", sex);
         // 排序规则
         queryWrapper.orderBy(SqlUtils.validSortField(sortField),
