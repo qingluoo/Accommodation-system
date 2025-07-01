@@ -1,5 +1,7 @@
 package com.scu.Accommodation.controller;
 
+import cn.hutool.core.io.FileUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.scu.Accommodation.annotation.AuthCheck;
 import com.scu.Accommodation.common.BaseResponse;
@@ -18,13 +20,18 @@ import com.scu.Accommodation.model.entity.User;
 import com.scu.Accommodation.model.vo.TransactionVO;
 import com.scu.Accommodation.service.TransactionService;
 import com.scu.Accommodation.service.UserService;
+import com.scu.Accommodation.utils.ConTypeUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 /**
  * 业务接口
@@ -229,6 +236,40 @@ public class TransactionController {
         boolean result = transactionService.updateById(transaction);
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
         return ResultUtils.success(true);
+    }
+
+
+    @GetMapping("/download/{fileName}")
+    public void download(@PathVariable String fileName,HttpServletRequest request ,HttpServletResponse response) throws Exception {
+        QueryWrapper<Transaction> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("filename", fileName);
+        Transaction transaction = transactionService.getOne(queryWrapper);
+        ThrowUtils.throwIf(transaction == null, ErrorCode.NOT_FOUND_ERROR);
+        byte[] bytes = transaction.getFilebyte();
+        String ContentType = ConTypeUtil.determineContentType(fileName);
+        response.setContentType(ContentType);
+        // 处理文件名编码
+        String userAgent = request.getHeader("User-Agent");
+        String encodedFileName;
+        if (userAgent.contains("MSIE") || userAgent.contains("Trident")) {
+            // IE浏览器
+            encodedFileName = URLEncoder.encode(fileName, "UTF-8");
+        } else if (userAgent.contains("Mozilla")) {
+            // Firefox, Chrome等现代浏览器
+            encodedFileName = new String(fileName.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1);
+        } else {
+            // 其他浏览器
+            encodedFileName = URLEncoder.encode(fileName, "UTF-8");
+        }
+        // 设置Content-Disposition头
+        String contentDisposition = String.format("attachment; filename=\"%s\"", encodedFileName);
+        response.setHeader("Content-Disposition", contentDisposition);
+
+        // 4. 写入文件流（安全写法）
+        try (ServletOutputStream os = response.getOutputStream()) {
+            os.write(bytes);
+            os.flush();
+        }
     }
 
     // endregion
