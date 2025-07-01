@@ -54,6 +54,8 @@ public class StudentEditRequest implements Serializable {
      */
     private String roomId;
 
+    private Long apartment_id;
+
     private Long userId;
 
 

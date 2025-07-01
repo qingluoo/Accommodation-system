@@ -59,6 +59,8 @@ public class StudentUpdateRequest implements Serializable {
      */
     private String roomId;
 
+    private Long apartment_id;
+
     private Long userId;
 
     private static final long serialVersionUID = 1L;

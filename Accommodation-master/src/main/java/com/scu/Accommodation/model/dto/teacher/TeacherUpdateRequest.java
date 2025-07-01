@@ -49,6 +49,8 @@ public class TeacherUpdateRequest implements Serializable {
      */
     private String roomId;
 
+    private Long apartment_id;
+
     /**
      *
      */
