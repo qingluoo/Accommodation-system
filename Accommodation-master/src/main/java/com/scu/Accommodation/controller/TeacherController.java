@@ -2,6 +2,7 @@ package com.scu.Accommodation.controller;
 
 import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.scu.Accommodation.annotation.AuthCheck;
 import com.scu.Accommodation.common.BaseResponse;
@@ -112,8 +113,10 @@ public class TeacherController {
         // 数据校验
         teacherService.validTeacher(teacher, false);
         // 判断是否存在
-        long id = teacherUpdateRequest.getId();
-        Teacher oldTeacher = teacherService.getById(id);
+        String unionId = teacherUpdateRequest.getUnionId();
+        QueryWrapper<Teacher> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("unionId", unionId);
+        Teacher oldTeacher = teacherService.getOne(queryWrapper);
         ThrowUtils.throwIf(oldTeacher == null, ErrorCode.NOT_FOUND_ERROR);
         // 操作数据库
         boolean result = teacherService.updateById(teacher);
