@@ -128,7 +128,7 @@ public class StudentController {
      */
     @PostMapping("/updateByUnionId")
     public BaseResponse<Boolean> updateStudentByUnionId(@RequestBody StudentUpdateRequest studentUpdateRequest) {
-        if (studentUpdateRequest == null || studentUpdateRequest.getId() <= 0) {
+        if (studentUpdateRequest == null || studentUpdateRequest.getUnionId() == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
         // todo 在此处将实体类和 DTO 进行转换
