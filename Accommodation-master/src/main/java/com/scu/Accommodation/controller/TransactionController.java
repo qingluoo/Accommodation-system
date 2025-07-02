@@ -63,11 +63,13 @@ public class TransactionController {
         // todo 在此处将实体类和 DTO 进行转换
         Transaction transaction = new Transaction();
         BeanUtils.copyProperties(transactionAddRequest, transaction);
-        transaction.setFilename(transactionAddRequest.getFile().getOriginalFilename());
         try {
-            byte[] bytes = transactionAddRequest.getFile().getBytes();
-            // 现在你可以使用bytes数组了，写入数据库
-            transaction.setFilebyte(bytes);
+            if (transactionAddRequest.getFile() != null) {
+                transaction.setFilename(transactionAddRequest.getFile().getOriginalFilename());
+                byte[] bytes = transactionAddRequest.getFile().getBytes();
+                // 现在你可以使用bytes数组了，写入数据库
+                transaction.setFilebyte(bytes);
+            }
         } catch (IOException e) {
             // 在这里可以记录日志或进行其他异常处理
             ThrowUtils.throwIf(false, ErrorCode.SYSTEM_ERROR, e.getMessage());
