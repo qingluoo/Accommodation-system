@@ -26,6 +26,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 公寓接口
@@ -222,7 +224,12 @@ public class ApartmentController {
         return ResultUtils.success(true);
     }
 
-
-
     // endregion
+
+    @GetMapping("get/all")
+    public BaseResponse<List<ApartmentVO>> getAllApartment() {
+        List<Apartment> apartments = apartmentService.list();
+        List<ApartmentVO> apartmentVOList = apartments.stream().map(ApartmentVO::objToVo).collect(Collectors.toList());
+        return ResultUtils.success(apartmentVOList);
+    }
 }
