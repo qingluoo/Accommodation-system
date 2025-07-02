@@ -49,8 +49,8 @@ public class RoleVO implements Serializable {
         }
         Role role = new Role();
         BeanUtils.copyProperties(roleVO, role);
-        List<String> tagList = roleVO.getCodelist();
-        role.setCodelist(JSONUtil.toJsonStr(tagList));
+        List<String> codelist = roleVO.getCodelist();
+        role.setCodelist(JSONUtil.toJsonStr(codelist));
         return role;
     }
 

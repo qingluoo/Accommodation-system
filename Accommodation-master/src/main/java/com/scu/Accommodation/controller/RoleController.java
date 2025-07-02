@@ -1,5 +1,6 @@
 package com.scu.Accommodation.controller;
 
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.scu.Accommodation.annotation.AuthCheck;
 import com.scu.Accommodation.common.BaseResponse;
@@ -55,6 +56,7 @@ public class RoleController {
         // todo 在此处将实体类和 DTO 进行转换
         Role role = new Role();
         BeanUtils.copyProperties(roleAddRequest, role);
+        role.setCodelist(JSONUtil.toJsonStr(roleAddRequest.getCodelist()));
         // 数据校验
         roleService.validRole(role, true);
         // todo 填充默认值
@@ -104,6 +106,7 @@ public class RoleController {
         // todo 在此处将实体类和 DTO 进行转换
         Role role = new Role();
         BeanUtils.copyProperties(roleUpdateRequest, role);
+        role.setCodelist(JSONUtil.toJsonStr(roleUpdateRequest.getCodelist()));
         // 数据校验
         roleService.validRole(role, false);
         // 判断是否存在
