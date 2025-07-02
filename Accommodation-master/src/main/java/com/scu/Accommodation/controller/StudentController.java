@@ -2,7 +2,6 @@ package com.scu.Accommodation.controller;
 
 import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.scu.Accommodation.annotation.AuthCheck;
 import com.scu.Accommodation.common.BaseResponse;
@@ -111,10 +110,8 @@ public class StudentController {
         // 数据校验
         studentService.validStudent(student, false);
         // 判断是否存在
-        String unionId = studentUpdateRequest.getUnionId();
-        QueryWrapper<Student> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("unionId", unionId);
-        Student oldStudent = studentService.getOne(queryWrapper);
+        long id = studentUpdateRequest.getId();
+        Student oldStudent = studentService.getById(id);
         ThrowUtils.throwIf(oldStudent == null, ErrorCode.NOT_FOUND_ERROR);
         // 操作数据库
         boolean result = studentService.updateById(student);
