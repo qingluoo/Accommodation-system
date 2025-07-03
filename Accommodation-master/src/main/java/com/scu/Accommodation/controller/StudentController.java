@@ -256,7 +256,7 @@ public class StudentController {
 
     // endregion
 
-    // 批量导入
+    // 批量导入学生
     @PostMapping("/import")
     public BaseResponse<Boolean> importData(MultipartFile file) throws Exception {
         //拿到输入流 构建reader
@@ -282,7 +282,7 @@ public class StudentController {
      * 批量更新学生寝室信息
      */
     @PostMapping("/update/park-building")
-    public BaseResponse<Boolean> updateRoom(@RequestBody List<StudentEditRequest> studentEditRequests) {
+    public BaseResponse<Boolean> updateParkBuilding(@RequestBody List<StudentEditRequest> studentEditRequests) {
         if (studentEditRequests == null || studentEditRequests.size() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
@@ -300,6 +300,29 @@ public class StudentController {
             boolean result = studentService.updateById(student);
             ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
         }
+        return ResultUtils.success(true);
+    }
+
+    /**
+     * 批量更新学生寝室信息
+     */
+    @PostMapping("/update/room")
+    public BaseResponse<Boolean> updateRoom(@RequestBody StudentEditRequest studentEditRequest) {
+        if (studentEditRequest == null || studentEditRequest.getId() <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        // todo 在此处将实体类和 DTO 进行转换
+        Student student = new Student();
+        BeanUtils.copyProperties(studentEditRequest, student);
+        // 数据校验
+        studentService.validStudent(student, false);
+        // 判断是否存在
+        long id = studentEditRequest.getId();
+        Student oldStudent = studentService.getById(id);
+        ThrowUtils.throwIf(oldStudent == null, ErrorCode.NOT_FOUND_ERROR);
+        // 操作数据库
+        boolean result = studentService.updateById(student);
+        ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
         return ResultUtils.success(true);
     }
 }

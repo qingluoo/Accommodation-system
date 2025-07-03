@@ -288,7 +288,7 @@ public class UserController {
         InputStream inputStream = file.getInputStream();
         ExcelReader reader = ExcelUtil.getReader(inputStream);
         //通过Reader读取excel里面的数据
-        reader.addHeaderAlias("账号", "useAccount");
+        reader.addHeaderAlias("账号", "userAccount");
         reader.addHeaderAlias("密码", "userPassword");
         reader.addHeaderAlias("学号/工号", "unionId");
         reader.addHeaderAlias("用户名", "userName");
