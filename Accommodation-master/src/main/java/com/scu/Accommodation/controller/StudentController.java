@@ -175,6 +175,18 @@ public class StudentController {
         return ResultUtils.success(studentService.getStudentVO(student, request));
     }
 
+    @GetMapping("/get/vo/byUnionId")
+    public BaseResponse<StudentVO> getStudentVOByUnionId(@RequestParam String unionId, HttpServletRequest request) {
+        ThrowUtils.throwIf(unionId == null, ErrorCode.PARAMS_ERROR);
+        // 查询数据库
+        QueryWrapper<Student> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("unionId", unionId);
+        Student student = studentService.getOne(queryWrapper);
+        ThrowUtils.throwIf(student == null, ErrorCode.NOT_FOUND_ERROR);
+        // 获取封装类
+        return ResultUtils.success(studentService.getStudentVO(student, request));
+    }
+
     /**
      * 分页获取学生列表（仅管理员可用）
      *
