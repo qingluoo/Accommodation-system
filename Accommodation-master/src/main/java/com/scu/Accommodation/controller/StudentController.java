@@ -311,7 +311,7 @@ public class StudentController {
      * 批量更新学生寝室信息
      */
     @PostMapping("/update/park-building")
-    public BaseResponse<Boolean> updateParkBuilding(@RequestParam MultipartFile file,@RequestParam List<ApartmentUpdateRequest> selectedParkBuildingList) throws Exception {
+    public BaseResponse<Boolean> updateParkBuilding(@RequestParam MultipartFile file,@RequestParam String[] selectedParkBuildingList) throws Exception {
         //拿到输入流 构建reader
         InputStream inputStream = file.getInputStream();
         ExcelReader reader = ExcelUtil.getReader(inputStream);
@@ -343,11 +343,11 @@ public class StudentController {
         //获取每个索引对应的楼栋可住的男生人数
         Map<Integer, Integer> canLiveMaleNumMap = new HashMap<>();
         int index = 0;
-        for (ApartmentUpdateRequest selected : selectedParkBuildingList) {
+        for (int i = 0; i < selectedParkBuildingList.length; i++) {
             QueryWrapper<Apartment> queryWrapper = new QueryWrapper<>();
             //查询该楼栋的女生可住房间
-            queryWrapper.eq("park", selected.getPark());
-            queryWrapper.eq("building", selected.getBuilding());
+            queryWrapper.eq("park", selectedParkBuildingList[i].split("-")[0]);
+            queryWrapper.eq("building", selectedParkBuildingList[i].split("-")[1]);
             queryWrapper.like("roomType", "女");
             List<Apartment> femaleRooms = apartmentService.list(queryWrapper);
             //当前楼栋可住的女生人数 = 女生可住房间的总床位 - 女生可住房间的已住人数
@@ -356,8 +356,8 @@ public class StudentController {
             canLiveFemaleNumMap.put(index, femaleBeds - femaleLived);
             //查询该楼栋的男生可住房间
             QueryWrapper<Apartment> maleWrapper = new QueryWrapper<>();
-            maleWrapper.eq("park", selected.getPark());
-            maleWrapper.eq("building", selected.getBuilding());
+            maleWrapper.eq("park",selectedParkBuildingList[i].split("-")[0]);
+            maleWrapper.eq("building", selectedParkBuildingList[i].split("-")[1]);
             maleWrapper.like("roomType", "男");
             List<Apartment> maleRooms = apartmentService.list(maleWrapper);
             //当前楼栋可住的男生人数 = 男生可住房间的总床位 - 男生可住房间的已住人数
@@ -376,33 +376,33 @@ public class StudentController {
     }
 
     public void assignToBuildingOnly(List<Student> students,
-                                     List<ApartmentUpdateRequest> selectedParkBuildingList,
+                                     String[] selectedParkBuildingList,
                                      String genderType,
                                      Map<Integer, Integer> canLiveMap) {
+        int stuIndex = 0; // 当前处理的学生索引
+        int buildingIndex = 0; // 当前处理的楼栋索引
 
-        int stuIndex = 0;
-        int buildingIndex = 0;
-
-        while (stuIndex < students.size() && buildingIndex < selectedParkBuildingList.size()) {
+        while (stuIndex < students.size() && buildingIndex < selectedParkBuildingList.length) {
             int canAssignNum = canLiveMap.getOrDefault(buildingIndex, 0);
             if (canAssignNum <= 0) {
                 buildingIndex++;
                 continue;
             }
 
-            ApartmentUpdateRequest selected = selectedParkBuildingList.get(buildingIndex);
+            // 拆分园区-楼栋字符串
+            String[] parts = selectedParkBuildingList[buildingIndex].split("-");
+            String park = parts[0];
+            String building = parts[1];
 
-            // 分配到该楼栋的学生数量 = min(可住人数, 剩余学生人数)
+            // 本轮可分配的人数
             int assignCount = Math.min(canAssignNum, students.size() - stuIndex);
 
             for (int i = 0; i < assignCount; i++) {
                 Student stu = students.get(stuIndex++);
-                stu.setPark(selected.getPark());
-                stu.setBuilding(selected.getBuilding());
-                stu.setRoomId(null);  // 不分配到房间
-                stu.setRoom(null);
+                stu.setPark(park);
+                stu.setBuilding(building);
 
-                // 如果需要写入数据库：
+                // 更新数据库记录（建议确认 Student 的主键是否为 unionId）
                 QueryWrapper<Student> queryWrapper = new QueryWrapper<>();
                 queryWrapper.eq("unionId", stu.getUnionId());
                 studentService.update(stu, queryWrapper);
