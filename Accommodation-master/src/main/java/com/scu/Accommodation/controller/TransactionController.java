@@ -243,10 +243,11 @@ public class TransactionController {
     }
 
 
-    @GetMapping("/download/{fileName}")
-    public void download(@PathVariable String fileName,HttpServletRequest request ,HttpServletResponse response) throws Exception {
+    @GetMapping("/download")
+    public void download(@RequestParam("fileName") String fileName,@RequestParam("unionId") String unionId,HttpServletRequest request ,HttpServletResponse response) throws Exception {
         QueryWrapper<Transaction> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("filename", fileName);
+        queryWrapper.eq("unionId", unionId);
         Transaction transaction = transactionService.getOne(queryWrapper);
         ThrowUtils.throwIf(transaction == null, ErrorCode.NOT_FOUND_ERROR);
         byte[] bytes = transaction.getFilebyte();
