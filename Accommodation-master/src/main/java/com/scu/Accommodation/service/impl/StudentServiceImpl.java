@@ -102,7 +102,8 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         queryWrapper.eq(ObjectUtils.isNotEmpty(classNum), "classNum", classNum);
         queryWrapper.eq(ObjectUtils.isNotEmpty(park), "park", park);
         queryWrapper.eq(ObjectUtils.isNotEmpty(building), "building", building);
-        queryWrapper.eq("room", room);
+        queryWrapper.eq(!room.isEmpty(),"room", room);
+
         queryWrapper.eq(ObjectUtils.isNotEmpty(sex), "sex", sex);
         // 排序规则
         queryWrapper.orderBy(SqlUtils.validSortField(sortField),
