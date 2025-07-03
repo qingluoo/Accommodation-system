@@ -12,6 +12,7 @@ import com.scu.Accommodation.common.ResultUtils;
 import com.scu.Accommodation.constant.UserConstant;
 import com.scu.Accommodation.exception.BusinessException;
 import com.scu.Accommodation.exception.ThrowUtils;
+import com.scu.Accommodation.mapper.StudentMapper;
 import com.scu.Accommodation.model.dto.apartment.ApartmentUpdateRequest;
 import com.scu.Accommodation.model.dto.student.StudentAddRequest;
 import com.scu.Accommodation.model.dto.student.StudentEditRequest;
@@ -46,6 +47,9 @@ public class StudentController {
 
     @Resource
     private StudentService studentService;
+
+    @Resource
+    private StudentMapper studentMapper;
 
     @Resource
     private UserService userService;
@@ -289,7 +293,7 @@ public class StudentController {
      * 退宿舍
      */
     @PostMapping("/quitroom")
-    public BaseResponse<Boolean> quitRoom(@RequestBody String unionId, HttpServletRequest request) {
+    public BaseResponse<Boolean> quitRoom(@RequestParam String unionId, HttpServletRequest request) {
         if (unionId.isEmpty()) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
@@ -298,11 +302,7 @@ public class StudentController {
         queryWrapper.eq("unionId", unionId);
         Student student = studentService.getOne(queryWrapper);
         ThrowUtils.throwIf(student == null, ErrorCode.NOT_FOUND_ERROR);
-        student.setPark(null);
-        student.setBuilding(null);
-        student.setRoomId(null);
-        // 操作数据库
-        boolean result = studentService.update(student, queryWrapper);
+        boolean result = studentMapper.quitRoom(unionId);
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
         return ResultUtils.success(true);
     }

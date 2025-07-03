@@ -25,4 +25,9 @@
         id,unionId,grade,stuName,sex,college,
         major,classNum,park,building,room,roomId,isDelete
     </sql>
+
+    <update id="quitRoom" parameterType="String">
+        UPDATE student SET park = NULL, building = NULL, room = NULL , roomId = NULL ,apartment_id = NULL WHERE unionId = #{unionId}
+    </update>
+
 </mapper>
