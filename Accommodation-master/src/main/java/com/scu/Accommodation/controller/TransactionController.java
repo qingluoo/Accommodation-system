@@ -32,6 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Date;
 
 /**
  * 业务接口
@@ -122,6 +123,7 @@ public class TransactionController {
         // todo 在此处将实体类和 DTO 进行转换
         Transaction transaction = new Transaction();
         BeanUtils.copyProperties(transactionUpdateRequest, transaction);
+        transaction.setUpdateTime(new Date());
         // 数据校验
         transactionService.validTransaction(transaction, false);
         // 判断是否存在

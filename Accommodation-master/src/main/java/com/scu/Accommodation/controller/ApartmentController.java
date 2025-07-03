@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -106,6 +107,7 @@ public class ApartmentController {
         // todo 在此处将实体类和 DTO 进行转换
         Apartment apartment = new Apartment();
         BeanUtils.copyProperties(apartmentUpdateRequest, apartment);
+        apartment.setUpdateTime(new Date());
         // 数据校验
         apartmentService.validApartment(apartment, false);
         // 判断是否存在
