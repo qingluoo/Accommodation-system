@@ -187,6 +187,20 @@ public class StudentController {
         return ResultUtils.success(studentService.getStudentVO(student, request));
     }
 
+    @PostMapping("/list/page/stuWithNoRoom")
+    public BaseResponse<Page<Student>> listStudentWithNoRoom(@RequestBody StudentQueryRequest studentQueryRequest) {
+        long current = studentQueryRequest.getCurrent();
+        long size = studentQueryRequest.getPageSize();
+        QueryWrapper<Student> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("park", studentQueryRequest.getPark());
+        queryWrapper.eq("building", studentQueryRequest.getBuilding());
+        queryWrapper.eq("room", null);
+        // 查询数据库
+        Page<Student> studentPage = studentService.page(new Page<>(current, size),
+                studentService.getQueryWrapper(studentQueryRequest));
+        return ResultUtils.success(studentPage);
+    }
+
     /**
      * 分页获取学生列表（仅管理员可用）
      *
