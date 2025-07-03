@@ -12,13 +12,16 @@ import com.scu.Accommodation.common.ResultUtils;
 import com.scu.Accommodation.constant.UserConstant;
 import com.scu.Accommodation.exception.BusinessException;
 import com.scu.Accommodation.exception.ThrowUtils;
+import com.scu.Accommodation.model.dto.apartment.ApartmentUpdateRequest;
 import com.scu.Accommodation.model.dto.student.StudentAddRequest;
 import com.scu.Accommodation.model.dto.student.StudentEditRequest;
 import com.scu.Accommodation.model.dto.student.StudentQueryRequest;
 import com.scu.Accommodation.model.dto.student.StudentUpdateRequest;
+import com.scu.Accommodation.model.entity.Apartment;
 import com.scu.Accommodation.model.entity.Student;
 import com.scu.Accommodation.model.entity.User;
 import com.scu.Accommodation.model.vo.StudentVO;
+import com.scu.Accommodation.service.ApartmentService;
 import com.scu.Accommodation.service.StudentService;
 import com.scu.Accommodation.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +32,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.InputStream;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 学生接口
@@ -45,6 +49,9 @@ public class StudentController {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private ApartmentService apartmentService;
 
     // region 增删改查
 
@@ -282,47 +289,108 @@ public class StudentController {
      * 批量更新学生寝室信息
      */
     @PostMapping("/update/park-building")
-    public BaseResponse<Boolean> updateParkBuilding(@RequestBody List<StudentEditRequest> studentEditRequests) {
-        if (studentEditRequests == null || studentEditRequests.size() <= 0) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+    public BaseResponse<Boolean> updateParkBuilding(@RequestBody List<ApartmentUpdateRequest> selectedParkBuildingList, MultipartFile file) throws Exception {
+        //拿到输入流 构建reader
+        InputStream inputStream = file.getInputStream();
+        ExcelReader reader = ExcelUtil.getReader(inputStream);
+        //通过Reader读取excel里面的数据
+        reader.addHeaderAlias("学号", "unionId");
+        reader.addHeaderAlias("年级", "grade");
+        reader.addHeaderAlias("姓名", "stuName");
+        reader.addHeaderAlias("性别", "sex");
+        reader.addHeaderAlias("学院", "college");
+        reader.addHeaderAlias("专业", "major");
+        reader.addHeaderAlias("班级", "classNum");
+        List<Student> students=reader.readAll(Student.class);
+        //分类学生(按性别分类男女学生)
+        List<Student> maleStudents = new ArrayList<>();
+        List<Student> femaleStudents = new ArrayList<>();
+        for (Student student : students) {
+            if (student.getSex() == 1) {
+                maleStudents.add(student);
+            } else if (student.getSex() == 0) {
+                femaleStudents.add(student);
+            }
         }
-        for (StudentEditRequest studentEditRequest : studentEditRequests) {
-            // todo 在此处将实体类和 DTO 进行转换
-            Student student = new Student();
-            BeanUtils.copyProperties(studentEditRequest, student);
-            // 数据校验
-            studentService.validStudent(student, false);
-            // 判断是否存在
-            long id = studentEditRequest.getId();
-            Student oldStudent = studentService.getById(id);
-            ThrowUtils.throwIf(oldStudent == null, ErrorCode.NOT_FOUND_ERROR);
-            // 操作数据库
-            boolean result = studentService.updateById(student);
-            ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
+        //将男女学生按专业排序
+        maleStudents.sort(Comparator.comparing(Student::getMajor));
+        femaleStudents.sort(Comparator.comparing(Student::getMajor));
+
+        //获取每个索引对应的楼栋可住的女生人数
+        Map<Integer, Integer> canLiveFemaleNumMap = new HashMap<>();
+        //获取每个索引对应的楼栋可住的男生人数
+        Map<Integer, Integer> canLiveMaleNumMap = new HashMap<>();
+        int index = 0;
+        for (ApartmentUpdateRequest selected : selectedParkBuildingList) {
+            QueryWrapper<Apartment> queryWrapper = new QueryWrapper<>();
+            //查询该楼栋的女生可住房间
+            queryWrapper.eq("park", selected.getPark());
+            queryWrapper.eq("building", selected.getBuilding());
+            queryWrapper.like("roomType", "女");
+            List<Apartment> femaleRooms = apartmentService.list(queryWrapper);
+            //当前楼栋可住的女生人数 = 女生可住房间的总床位 - 女生可住房间的已住人数
+            int femaleBeds = femaleRooms.stream().mapToInt(Apartment::getBedNum).sum();
+            int femaleLived = femaleRooms.stream().mapToInt(Apartment::getLiveNum).sum();
+            canLiveFemaleNumMap.put(index, femaleBeds - femaleLived);
+            //查询该楼栋的男生可住房间
+            QueryWrapper<Apartment> maleWrapper = new QueryWrapper<>();
+            maleWrapper.eq("park", selected.getPark());
+            maleWrapper.eq("building", selected.getBuilding());
+            maleWrapper.like("roomType", "男");
+            List<Apartment> maleRooms = apartmentService.list(maleWrapper);
+            //当前楼栋可住的男生人数 = 男生可住房间的总床位 - 男生可住房间的已住人数
+            int maleBeds = maleRooms.stream().mapToInt(Apartment::getBedNum).sum();
+            int maleLived = maleRooms.stream().mapToInt(Apartment::getLiveNum).sum();
+            canLiveMaleNumMap.put(index, maleBeds - maleLived);
+            index++;
         }
+
+        // 分配女生到楼栋
+        assignToBuildingOnly(femaleStudents, selectedParkBuildingList, "女", canLiveFemaleNumMap);
+        // 分配男生到楼栋
+        assignToBuildingOnly(maleStudents, selectedParkBuildingList, "男", canLiveMaleNumMap);
+
         return ResultUtils.success(true);
     }
 
-    /**
-     * 批量更新学生寝室信息
-     */
-    @PostMapping("/update/room")
-    public BaseResponse<Boolean> updateRoom(@RequestBody StudentEditRequest studentEditRequest) {
-        if (studentEditRequest == null || studentEditRequest.getId() <= 0) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+    public void assignToBuildingOnly(List<Student> students,
+                                     List<ApartmentUpdateRequest> selectedParkBuildingList,
+                                     String genderType,
+                                     Map<Integer, Integer> canLiveMap) {
+
+        int stuIndex = 0;
+        int buildingIndex = 0;
+
+        while (stuIndex < students.size() && buildingIndex < selectedParkBuildingList.size()) {
+            int canAssignNum = canLiveMap.getOrDefault(buildingIndex, 0);
+            if (canAssignNum <= 0) {
+                buildingIndex++;
+                continue;
+            }
+
+            ApartmentUpdateRequest selected = selectedParkBuildingList.get(buildingIndex);
+
+            // 分配到该楼栋的学生数量 = min(可住人数, 剩余学生人数)
+            int assignCount = Math.min(canAssignNum, students.size() - stuIndex);
+
+            for (int i = 0; i < assignCount; i++) {
+                Student stu = students.get(stuIndex++);
+                stu.setPark(selected.getPark());
+                stu.setBuilding(selected.getBuilding());
+                stu.setRoomId(null);  // 不分配到房间
+                stu.setRoom(null);
+
+                // 如果需要写入数据库：
+                QueryWrapper<Student> queryWrapper = new QueryWrapper<>();
+                queryWrapper.eq("unionId", stu.getUnionId());
+                studentService.update(stu, queryWrapper);
+            }
+
+            buildingIndex++;
         }
-        // todo 在此处将实体类和 DTO 进行转换
-        Student student = new Student();
-        BeanUtils.copyProperties(studentEditRequest, student);
-        // 数据校验
-        studentService.validStudent(student, false);
-        // 判断是否存在
-        long id = studentEditRequest.getId();
-        Student oldStudent = studentService.getById(id);
-        ThrowUtils.throwIf(oldStudent == null, ErrorCode.NOT_FOUND_ERROR);
-        // 操作数据库
-        boolean result = studentService.updateById(student);
-        ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
-        return ResultUtils.success(true);
+
+        if (stuIndex < students.size()) {
+            System.err.println("⚠️ [" + genderType + "生] 还有 " + (students.size() - stuIndex) + " 人未能分配宿舍楼！");
+        }
     }
 }
