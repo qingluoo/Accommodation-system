@@ -286,6 +286,28 @@ public class StudentController {
     }
 
     /**
+     * 退宿舍
+     */
+    @PostMapping("/quitroom")
+    public BaseResponse<Boolean> quitRoom(@RequestBody String unionId, HttpServletRequest request) {
+        if (unionId.isEmpty()) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        // 判断是否存在
+        QueryWrapper<Student> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("unionId", unionId);
+        Student student = studentService.getOne(queryWrapper);
+        ThrowUtils.throwIf(student == null, ErrorCode.NOT_FOUND_ERROR);
+        student.setPark(null);
+        student.setBuilding(null);
+        student.setRoomId(null);
+        // 操作数据库
+        boolean result = studentService.update(student, queryWrapper);
+        ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
+        return ResultUtils.success(true);
+    }
+
+    /**
      * 批量更新学生寝室信息
      */
     @PostMapping("/update/park-building")
