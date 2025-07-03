@@ -320,6 +320,25 @@ public class StudentController {
     }
 
     /**
+     * 批量退宿
+     */
+    @PostMapping("/quitroom/batch")
+    public BaseResponse<Boolean> quitRoomBatch(@RequestBody List<String> unionIds, HttpServletRequest request) {
+        if (unionIds == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        for(String unionId:unionIds){
+            QueryWrapper<Student> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("unionId", unionId);
+            Student student = studentService.getOne(queryWrapper);
+            ThrowUtils.throwIf(student == null, ErrorCode.NOT_FOUND_ERROR);
+            boolean result = studentMapper.quitRoom(unionId);
+            ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
+        }
+        return ResultUtils.success(true);
+    }
+
+    /**
      * 批量更新学生寝室信息
      */
     @PostMapping("/update/park-building")
