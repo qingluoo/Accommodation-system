@@ -158,8 +158,6 @@ public class PermissionController {
                                                                HttpServletRequest request) {
         long current = permissionQueryRequest.getCurrent();
         long size = permissionQueryRequest.getPageSize();
-        // 限制爬虫
-        ThrowUtils.throwIf(size > 20, ErrorCode.PARAMS_ERROR);
         // 查询数据库
         Page<Permission> permissionPage = permissionService.page(new Page<>(current, size),
                 permissionService.getQueryWrapper(permissionQueryRequest));

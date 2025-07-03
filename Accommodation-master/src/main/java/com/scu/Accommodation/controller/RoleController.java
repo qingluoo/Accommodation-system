@@ -98,7 +98,6 @@ public class RoleController {
      * @return
      */
     @PostMapping("/update")
-    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
     public BaseResponse<Boolean> updateRole(@RequestBody RoleUpdateRequest roleUpdateRequest) {
         if (roleUpdateRequest == null || roleUpdateRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
@@ -164,8 +163,6 @@ public class RoleController {
                                                                HttpServletRequest request) {
         long current = roleQueryRequest.getCurrent();
         long size = roleQueryRequest.getPageSize();
-        // 限制爬虫
-        ThrowUtils.throwIf(size > 20, ErrorCode.PARAMS_ERROR);
         // 查询数据库
         Page<Role> rolePage = roleService.page(new Page<>(current, size),
                 roleService.getQueryWrapper(roleQueryRequest));
