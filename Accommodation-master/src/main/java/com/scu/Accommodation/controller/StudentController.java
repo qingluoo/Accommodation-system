@@ -289,7 +289,7 @@ public class StudentController {
      * 退宿舍
      */
     @PostMapping("/quitroom")
-    public BaseResponse<Boolean> quitRoom(@RequestBody String unionId, HttpServletRequest request) {
+    public BaseResponse<Boolean> quitRoom(@RequestParam String unionId, HttpServletRequest request) {
         if (unionId.isEmpty()) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
@@ -300,7 +300,7 @@ public class StudentController {
         ThrowUtils.throwIf(student == null, ErrorCode.NOT_FOUND_ERROR);
         student.setPark(null);
         student.setBuilding(null);
-        student.setRoomId(null);
+        student.setRoom(null);
         // 操作数据库
         boolean result = studentService.update(student, queryWrapper);
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
