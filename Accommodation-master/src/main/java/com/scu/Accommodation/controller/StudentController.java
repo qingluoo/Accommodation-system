@@ -311,7 +311,7 @@ public class StudentController {
      * 批量更新学生寝室信息
      */
     @PostMapping("/update/park-building")
-    public BaseResponse<Boolean> updateParkBuilding(@RequestBody List<ApartmentUpdateRequest> selectedParkBuildingList, MultipartFile file) throws Exception {
+    public BaseResponse<Boolean> updateParkBuilding(@RequestParam MultipartFile file,@RequestParam List<ApartmentUpdateRequest> selectedParkBuildingList) throws Exception {
         //拿到输入流 构建reader
         InputStream inputStream = file.getInputStream();
         ExcelReader reader = ExcelUtil.getReader(inputStream);

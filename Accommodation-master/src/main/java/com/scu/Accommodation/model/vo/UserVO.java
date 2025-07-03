@@ -18,6 +18,8 @@ public class UserVO implements Serializable {
 
     private String unionId;
 
+    private String userAccount;
+
     /**
      * 用户昵称
      */
