@@ -49,32 +49,20 @@ public class AuthInterceptor {
      */
     @Around("@annotation(authCheck)")
     public Object doInterceptor(ProceedingJoinPoint joinPoint, AuthCheck authCheck) throws Throwable {
-        String mustRole = authCheck.mustRole();
         String mustCode = authCheck.mustCode();
         RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
         HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
         // 当前登录用户
         User loginUser = userService.getLoginUser(request);
         String userRole = loginUser.getUserRole();
-        UserRoleEnum mustRoleEnum = UserRoleEnum.getEnumByValue(mustRole);
 
         // 不需要权限，放行
-        if (mustRoleEnum == null || mustCode == null) {
+        if (mustCode == null) {
             return joinPoint.proceed();
         }
-        checkRole(userRole, mustRole);
         checkCode(userRole, mustCode);
         // 通过权限校验，放行
         return joinPoint.proceed();
-    }
-
-    /**
-     * 校验用户角色
-     */
-    private void checkRole(String userRole, String requiredRole) {
-        if (!requiredRole.equals(userRole)) {
-            throw new BusinessException(ErrorCode.NO_AUTH_ERROR, "角色权限不足");
-        }
     }
 
     /**
