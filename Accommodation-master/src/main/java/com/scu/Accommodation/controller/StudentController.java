@@ -196,8 +196,7 @@ public class StudentController {
         queryWrapper.eq("building", studentQueryRequest.getBuilding());
         queryWrapper.eq("room", null);
         // 查询数据库
-        Page<Student> studentPage = studentService.page(new Page<>(current, size),
-                studentService.getQueryWrapper(studentQueryRequest));
+        Page<Student> studentPage = studentService.page(new Page<>(current, size), queryWrapper);
         return ResultUtils.success(studentPage);
     }
 
