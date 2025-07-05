@@ -159,7 +159,6 @@ public class RepairerController {
         long current = repairerQueryRequest.getCurrent();
         long size = repairerQueryRequest.getPageSize();
         // 限制爬虫
-        ThrowUtils.throwIf(size > 20, ErrorCode.PARAMS_ERROR);
         // 查询数据库
         Page<Repairer> repairerPage = repairerService.page(new Page<>(current, size),
                 repairerService.getQueryWrapper(repairerQueryRequest));
