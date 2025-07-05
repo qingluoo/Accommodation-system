@@ -141,7 +141,6 @@ public class RoleController {
      * @return
      */
     @PostMapping("/list/page")
-    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
     public BaseResponse<Page<Role>> listRoleByPage(@RequestBody RoleQueryRequest roleQueryRequest) {
         long current = roleQueryRequest.getCurrent();
         long size = roleQueryRequest.getPageSize();
