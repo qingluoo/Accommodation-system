@@ -159,8 +159,6 @@ public class HouseparentsController {
                                                                HttpServletRequest request) {
         long current = houseparentsQueryRequest.getCurrent();
         long size = houseparentsQueryRequest.getPageSize();
-        // 限制爬虫
-        ThrowUtils.throwIf(size > 20, ErrorCode.PARAMS_ERROR);
         // 查询数据库
         Page<Houseparents> houseparentsPage = houseparentsService.page(new Page<>(current, size),
                 houseparentsService.getQueryWrapper(houseparentsQueryRequest));
@@ -185,7 +183,6 @@ public class HouseparentsController {
         long current = houseparentsQueryRequest.getCurrent();
         long size = houseparentsQueryRequest.getPageSize();
         // 限制爬虫
-        ThrowUtils.throwIf(size > 20, ErrorCode.PARAMS_ERROR);
         // 查询数据库
         Page<Houseparents> houseparentsPage = houseparentsService.page(new Page<>(current, size),
                 houseparentsService.getQueryWrapper(houseparentsQueryRequest));

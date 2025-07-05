@@ -180,8 +180,6 @@ public class TransactionController {
                                                                HttpServletRequest request) {
         long current = transactionQueryRequest.getCurrent();
         long size = transactionQueryRequest.getPageSize();
-        // 限制爬虫
-        ThrowUtils.throwIf(size > 20, ErrorCode.PARAMS_ERROR);
         // 查询数据库
         Page<Transaction> transactionPage = transactionService.page(new Page<>(current, size),
                 transactionService.getQueryWrapper(transactionQueryRequest));
